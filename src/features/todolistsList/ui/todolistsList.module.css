@@ -1,0 +1,13 @@
+.todoBlock{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px;
+    flex-wrap: wrap;
+
+}
+.addItemField{
+    font-size: 1.3rem;
+    margin: 20px;
+}

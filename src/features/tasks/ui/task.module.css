@@ -1,0 +1,25 @@
+.task {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px #bb86fc dashed;
+    width: 80%;
+    justify-content: space-between;
+
+}
+
+.taskText {
+    color: #e7e7e7;
+    font-size: 16px;
+}
+
+.boxWithTitle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.delete {
+}
+button:disabled{
+    opacity: 50%;
+}
