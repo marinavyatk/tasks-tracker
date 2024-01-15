@@ -1,4 +1,4 @@
-import { createSlice, isFulfilled, isRejected, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current, isFulfilled, isRejected, PayloadAction } from "@reduxjs/toolkit";
 import { Filter, RequestStatus, TodoListforUI, TodoListItem } from "common/types";
 import { todolistApi } from "features/todolist/api/todolistApi";
 import { createAppAsyncThunk } from "common/createAppAsyncThunk";
@@ -37,7 +37,50 @@ const slice = createSlice({
       .addCase(changeTodolistTitle.fulfilled, (state, action) => {
         const todoIndex = state.findIndex((todo) => todo.id === action.payload.todoId);
         state[todoIndex].title = action.payload.newTodoTitle;
-      });
+      })
+      .addCase(
+        changeTodolistOrder.fulfilled,
+        (state, action: PayloadAction<{ todoId: string; putAfterItemId: string | null }>) => {
+          const IndexPutAfterItem = state.findIndex((todo) => todo.id === action.payload.putAfterItemId);
+          const IndexReorderedTodo = state.findIndex((todo) => todo.id === action.payload.todoId);
+
+          if (IndexPutAfterItem < IndexReorderedTodo) {
+            const stateSnippetAfterItem = [];
+            for (let i = IndexPutAfterItem + 1; i < state.length; i++) {
+              if (state[i].id !== action.payload.todoId) {
+                stateSnippetAfterItem.push(state[i]);
+              }
+            }
+            state[IndexPutAfterItem + 1] = state[IndexReorderedTodo];
+            let j = 0;
+            for (let i = IndexPutAfterItem + 2; i < state.length; i++) {
+              state[i] = stateSnippetAfterItem[j];
+              j++;
+            }
+          } else {
+            const reorderedItem = state[IndexReorderedTodo];
+            const todosBefore = [];
+            const todosAfter = [];
+            for (let i = 0; i < IndexPutAfterItem + 1; i++) {
+              if (state[i].id !== action.payload.todoId) {
+                todosBefore.push(state[i]);
+              }
+            }
+            for (let i = IndexPutAfterItem + 1; i < state.length; i++) {
+              todosAfter.push(state[i]);
+            }
+            console.log(reorderedItem);
+            console.log("todosBefore");
+            console.log(todosBefore);
+            console.log("todosAfter");
+            console.log(todosAfter);
+            const reorderedState = todosBefore.concat(reorderedItem, todosAfter);
+            return reorderedState;
+          }
+
+          console.log(current(state));
+        },
+      );
   },
 });
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodoListItem[] }, void>(
@@ -90,18 +133,20 @@ const changeTodolistTitle = createAppAsyncThunk(
     }
   },
 );
-const changeTodolistOrder = createAppAsyncThunk<undefined, { todoId: string; putAfterItemId: string | null }>(
-  "todolists/changeTodolistOrder",
-  async (arg, thunkAPI) => {
-    const { dispatch, rejectWithValue } = thunkAPI;
-    const res = await todolistApi.changeTodolistOrder(arg.todoId, arg.putAfterItemId);
-    if (res.data.resultCode === ResultCode.Success) {
-      dispatch(fetchTodolists());
-    } else {
-      return rejectWithValue(res.data.messages?.[0] ?? null);
-    }
-  },
-);
+const changeTodolistOrder = createAppAsyncThunk<
+  { todoId: string; putAfterItemId: string | null },
+  { todoId: string; putAfterItemId: string | null }
+>("todolists/changeTodolistOrder", async (arg, thunkAPI) => {
+  const { dispatch, rejectWithValue } = thunkAPI;
+  const res = await todolistApi.changeTodolistOrder(arg.todoId, arg.putAfterItemId);
+
+  if (res.data.resultCode === ResultCode.Success) {
+    // dispatch(fetchTodolists());
+    return arg;
+  } else {
+    return rejectWithValue(res.data.messages?.[0] ?? null);
+  }
+});
 export const todolistReducer = slice.reducer;
 export const todolistActions = slice.actions;
 export const todolistThunks = {

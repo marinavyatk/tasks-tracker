@@ -3,11 +3,12 @@ import s from "features/sidebar/sidebarSection.module.css";
 import ProgressCircle from "common/components/ProgressCircle/ProgressCircle";
 import { useAppDispatch } from "app/store";
 import { appActions } from "app/appReducer";
-
+import { Badge } from "@mui/material";
 type SidebarSectionProps = {
   sectionName: string;
   progressValue?: number;
   todoId: string;
+  badgeContent?: number;
 };
 
 const SidebarSection = (props: SidebarSectionProps) => {
@@ -17,7 +18,17 @@ const SidebarSection = (props: SidebarSectionProps) => {
   };
   return (
     <div className={s.sidebarSection} onClick={() => handleClick(props.todoId)}>
-      <p className={s.item}>{props.sectionName}</p>
+      {props.sectionName !== "All" ? (
+        <p className={s.item}>{props.sectionName}</p>
+      ) : (
+        <Badge
+          badgeContent={<span style={{ fontWeight: "bold" }}>{props.badgeContent}</span>}
+          color={"secondary"}
+          showZero
+        >
+          <p className={s.item}>{props.sectionName}</p> &ensp;
+        </Badge>
+      )}
       {props.sectionName !== "All" && (
         <div className={s.item}>
           <ProgressCircle color={"#1ddecb"} percentage={props.progressValue ? props.progressValue : 0} />

@@ -2,22 +2,24 @@
     margin: 0;
     padding: 0 20px;
     display: flex;
-    justify-content: center;
     align-items: center;
     justify-content: space-between;
+    min-height: 50px;
+    text-align: start;
     gap: 10px;
+
 }
 
 .sidebarSection:hover {
     background-color: #232323;
 }
 
-/*.sidebarSection:nth-child(even){*/
-/*    background-color: #232323;*/
-/*}*/
-.sidebarSection p {
-    margin: 0;
+.sidebarSection:first-child{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-/*.item{*/
-/*    border-bottom: 1px dashed #bb86fc;*/
+/*.sidebarSection p {*/
+
+/*    word-break: break-word;*/
 /*}*/

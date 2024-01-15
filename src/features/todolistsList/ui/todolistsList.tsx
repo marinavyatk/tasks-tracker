@@ -41,73 +41,76 @@ const TodolistsList = () => {
   };
   const handleChangeTodoOrder = (data: { todoId: string; putAfterItemId: string | null }) => {
     console.log("change order!!!");
+    console.log("todoId:");
+    console.log(data.todoId);
+    console.log("putAfterItemId:");
+    console.log(data.putAfterItemId);
     dispatch(todolistThunks.changeTodolistOrder(data));
   };
+
+  const todolistsForDisplay =
+    activeTodo === "All"
+      ? todolists.map((tl, index) => {
+          return (
+            <Todolist
+              key={tl.id}
+              todoTitle={tl.title}
+              todoId={tl.id}
+              todoEntityStatus={tl.entityStatus}
+              onDragStart={handleDragStart}
+              onDrop={() =>
+                handleChangeTodoOrder({
+                  todoId: dragStartTodoId,
+                  putAfterItemId: todolists[index - 1]?.id || null,
+                })
+              }
+            />
+          );
+        })
+      : todolists
+          .filter((tl) => tl.id === activeTodo)
+          .map((tl, index) => {
+            return (
+              <Todolist
+                key={tl.id}
+                todoTitle={tl.title}
+                todoId={tl.id}
+                todoEntityStatus={tl.entityStatus}
+                onDragStart={handleDragStart}
+                onDrop={() =>
+                  handleChangeTodoOrder({
+                    todoId: tl.id,
+                    putAfterItemId: todolists[index - 1]?.id || null,
+                  })
+                }
+              />
+            );
+          });
+
   // const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
   //   event.preventDefault();
   // };
   return (
-    <div>
-      <Grid container justifyContent="center">
-        <Grid item xs={2}>
-          <Sidebar /> {/*лучше внутри этого компонента запрашивать тудулисты или передавать их через пропсы?*/}
-        </Grid>
-
-        <Grid container item xs={10} justifyContent={"center"}>
-          <Grid item>
-            <div className={s.addItemField}>
-              <AddNewItemField
-                width={"500px"}
-                placeholder={"Let`s create a list..."}
-                addItem={addTodolist}
-                error={error}
-              />
-            </div>
-          </Grid>
-          <Grid item>
-            <div className={s.todoBlock}>
-              {activeTodo === "All"
-                ? todolists.map((tl, index) => {
-                    return (
-                      <Todolist
-                        key={tl.id}
-                        todoTitle={tl.title}
-                        todoId={tl.id}
-                        todoEntityStatus={tl.entityStatus}
-                        onDragStart={handleDragStart}
-                        onDrop={() =>
-                          handleChangeTodoOrder({
-                            todoId: dragStartTodoId,
-                            putAfterItemId: todolists[index - 1]?.id || null,
-                          })
-                        }
-                      />
-                    );
-                  })
-                : todolists
-                    .filter((tl) => tl.id === activeTodo)
-                    .map((tl, index) => {
-                      return (
-                        <Todolist
-                          key={tl.id}
-                          todoTitle={tl.title}
-                          todoId={tl.id}
-                          todoEntityStatus={tl.entityStatus}
-                          onDragStart={handleDragStart}
-                          onDrop={() =>
-                            handleChangeTodoOrder({
-                              todoId: tl.id,
-                              putAfterItemId: todolists[index - 1]?.id || null,
-                            })
-                          }
-                        />
-                      );
-                    })}
-            </div>
-          </Grid>
+    // <div>
+    <Grid container justifyContent="center" direction="row">
+      <Grid item xs={2}>
+        <Sidebar /> {/*лучше внутри этого компонента запрашивать тудулисты или передавать их через пропсы?*/}
+      </Grid>
+      <Grid container item xs={10} justifyContent={"center"}>
+        <Grid item>
+          <div className={s.addItemField}>
+            <AddNewItemField
+              width={"494px"}
+              placeholder={"Let`s create a list..."}
+              addItem={addTodolist}
+              error={error}
+            />
+          </div>
+          <div className={s.todoBlock}>{todolistsForDisplay}</div>
         </Grid>
       </Grid>
-    </div>
+    </Grid>
+    // </div>
   );
 };
 

@@ -46,10 +46,19 @@ const LoginForm = () => {
             const isEmailError = !!(formik.touched.email && formik.errors.email);
             const isPasswordError = !!(formik.touched.password && formik.errors.password);
             return (
-              <form onSubmit={formik.handleSubmit}>
+              <form onSubmit={formik.handleSubmit} autoComplete="on">
                 <FormControl>
                   <FormGroup>
-                    <TextField label="Email" margin="normal" {...formik.getFieldProps("email")} error={isEmailError} />
+                    <TextField
+                      label="Email"
+                      margin="normal"
+                      {...formik.getFieldProps("email")}
+                      error={isEmailError}
+                      type="email"
+                      name="email" // Добавленный атрибут
+                      autoComplete={"email"}
+                      id="email"
+                    />
                     {isEmailError && <p className={s.error}>{formik.errors.email}</p>}
                     <TextField
                       type="password"
@@ -57,6 +66,9 @@ const LoginForm = () => {
                       margin="normal"
                       {...formik.getFieldProps("password")}
                       error={isPasswordError}
+                      autoComplete="current-password" // Добавленный атрибут
+                      name="password" // Добавленный атрибут
+                      id="password"
                     />
                     {isPasswordError && <p className={s.error}>{formik.errors.password}</p>}
                     <FormControlLabel

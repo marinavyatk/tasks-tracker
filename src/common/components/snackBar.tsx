@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectAppError } from "common/selectors";
@@ -8,6 +8,14 @@ import { useAppDispatch } from "app/store";
 const SnackBar = () => {
   const error = useSelector(selectAppError);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (error) {
+      // Внесите изменения в ваш код обработки ошибки здесь, если необходимо.
+      console.log("Handle error:", error);
+    }
+  }, [error]);
+
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     console.log(reason);
     if (reason === "clickaway") {

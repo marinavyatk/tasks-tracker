@@ -1,8 +1,20 @@
 .sidebar {
-    background-color: rgb(18 18 18);
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: rgb(23 23 23);
     position: fixed;
-    width: 16%;
+    top: 0px;
+    bottom: 0px;
+    padding: 30px 0;
+    overflow-y:scroll;
+    /*width: 16%;*/
+    width: 300px;
+
+
+
+
 }
 .logo{
     display: flex;
@@ -10,5 +22,34 @@
     align-items: center;
     color: #bb86fc;
     font-size: 20px;
-    /*text-transform: capitalize;*/
+margin-bottom: 50px;
+    letter-spacing: 1px;
 }
+
+.userEmail{
+    color: #bb86fc;
+    letter-spacing: 1px;
+}
+.sidebarFooter{
+    position: relative;
+    right: 0;
+left: 0;
+    bottom: 0;
+}
+/*.sidebar:first-child{*/
+/*    background-color: #232323;*/
+/*}*/
+/*.sidebarSection:first-child{*/
+/*    background-color: #232323;*/
+/*}*/
+/*.all{*/
+/*    background-color: #232323;*/
+/*}*/
+/*.lists:first-child {*/
+/*    margin: auto; !* или margin-left: auto; *!*/
+/*    !*background-color: #232323;*!*/
+/*    justify-content: center;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/

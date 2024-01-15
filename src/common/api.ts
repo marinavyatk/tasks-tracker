@@ -9,14 +9,14 @@ export const instance = axios.create({
   },
 });
 
-export const authApi = {
-  me() {
-    return instance.get<CommonResponse<UserData>>("auth/me");
-  },
-  login(authData: DataForAuthorization) {
-    return instance.post<CommonResponse<{ userId: 2 }>>("auth/login", authData);
-  },
-  logout() {
-    return instance.delete<CommonResponse>("auth/login");
-  },
-};
+// export const authApi = {
+//   me() {
+//     return instance.get<CommonResponse<UserData>>("auth/me");
+//   },
+//   login(authData: DataForAuthorization) {
+//     return instance.post<CommonResponse<{ userId: 2 }>>("auth/login", authData);
+//   },
+//   logout() {
+//     return instance.delete<CommonResponse>("auth/login");
+//   },
+// };

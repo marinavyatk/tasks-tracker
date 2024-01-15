@@ -1,6 +1,8 @@
 import React, { ChangeEvent, KeyboardEventHandler, useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { handleChangeDraggable } from "common/commonFunctions";
+import { appActions } from "app/appReducer";
+import { useAppDispatch } from "app/store";
 
 type EditableSpanProps = {
   todoId: string;
@@ -15,17 +17,26 @@ const EditableSpan = (props: EditableSpanProps) => {
   useEffect(() => {
     setContent(props.content);
   }, [props.content]);
-
+  const dispatch = useAppDispatch();
   const activateEditMode = () => {
     setEditMode(true);
   };
   const deactivateEditMode = () => {
     handleChangeDraggable(props.todoId, props.taskId, "true");
-    setEditMode(false);
+    // setEditMode(false);
     if (!content.trim().length && props.removeTask) {
       props.removeTask();
-    } else {
+    } else if (!content.trim().length) {
+      setContent(props.content);
+      setEditMode(false);
+    } else if (content.length > 100) {
+      // setContent(props.content);
+      dispatch(appActions.setAppError({ error: "Text length shouldn`t be more that 100 characters" }));
+    } else if (content !== props.content) {
       props.changeTitle(content);
+      setEditMode(false);
+    } else {
+      setEditMode(false);
     }
     //отправить новую таску на сервер, если она не пустая, если пустая, то удалить
   };
@@ -59,6 +70,7 @@ const EditableSpan = (props: EditableSpanProps) => {
               height: "100%",
               borderBottom: "none",
               padding: "0",
+              display: "block",
             },
           }}
         />

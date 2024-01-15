@@ -60,7 +60,7 @@ const Task = (props: TaskProps) => {
           onChange={handleChangeTaskStatus}
           sx={{
             color: "#bb86fc",
-            padding: "9px 9px 9px 0",
+            marginLeft: "-9px",
           }}
         />
         <span className={s.taskText}>
@@ -77,7 +77,10 @@ const Task = (props: TaskProps) => {
       </div>
       <IconButton
         onClick={handleRemoveTask}
-        sx={{ "&: hover": { backgroundColor: "rgba(187, 134, 252, 0.04)" }, padding: "9px 0 9px 9px" }}
+        sx={{
+          "&: hover": { backgroundColor: "rgba(187, 134, 252, 0.04)" },
+          marginRight: "-9px",
+        }}
         disabled={disabled}
       >
         <CancelIcon color={"primary"} className={s.delete} />

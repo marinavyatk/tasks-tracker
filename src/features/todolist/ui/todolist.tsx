@@ -73,7 +73,13 @@ const Todolist = (props: Todolist) => {
   }
   return (
     <Card
-      sx={{ minWidth: 275, backgroundColor: "#383838", width: "500px", textAlign: "center", minHeight: "150px" }}
+      sx={{
+        // minWidth: 275,
+        backgroundColor: "#383838",
+        width: "500px",
+        // textAlign: "center",
+        // minHeight: "150px"
+      }}
       raised={true}
       draggable={true}
       onDragStart={() => props.onDragStart(props.todoId)}
@@ -82,7 +88,7 @@ const Todolist = (props: Todolist) => {
       id={props.todoId}
     >
       <CardContent sx={{ padding: "20px 0" }}>
-        <Typography variant="h5" color="primary.light" gutterBottom>
+        <Typography variant="h5" color="primary.light" gutterBottom sx={{ width: "80%", margin: " 5px auto" }}>
           <EditableSpan content={props.todoTitle} changeTitle={changeTodoTitle} todoId={props.todoId} />{" "}
           <IconButton onClick={handleDeleteTodolist} sx={{ padding: "0" }} disabled={disabled}>
             <ClearIcon color={"primary"} />
@@ -90,7 +96,7 @@ const Todolist = (props: Todolist) => {
         </Typography>
         <AddNewItemField
           width={"80%"}
-          placeholder={"Add new task"}
+          placeholder={"Add new task..."}
           addItem={handleAddTask}
           error={error}
           todoId={props.todoId}
@@ -121,7 +127,10 @@ const Todolist = (props: Todolist) => {
           ))
         )}
       </div>
+      {/*<div style={{ transition: "transform 0.3s ease-in-out" }}>*/}
       <ProgressSlider progressValue={progressValue} />
+      {/*</div>*/}
+
       <CardActions sx={{ padding: "0" }}>
         <div className={s.buttonBlock}>
           <Button

@@ -28,9 +28,8 @@ function App() {
 
   return (
     <div className="app">
-      {appStatus === "loading" ? <LinearProgress /> : <div style={{ height: "4px" }}></div>}
+      {appStatus === "loading" && <LinearProgress sx={{ position: "fixed", left: 0, right: 0, zIndex: 1 }} />}
       <SnackBar />
-
       <BrowserRouter>
         <Routes>
           <Route

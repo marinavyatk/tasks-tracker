@@ -16,17 +16,23 @@ type Circle = {
 const Circle = (props: Circle) => {
   const { color, percentage } = props;
   const strokePct = ((100 - percentage) * circ) / 100; // where stroke will start, e.g. from 15% to 100%.
+  // const strokePct = (percentage * circ) / 100;
+  const dashArray = circ;
+  const dashOffset = circ - (percentage * circ) / 100; // изменено направление анимации
   return (
     <circle
+      style={{ transition: "0.7s  ease-in-out" }}
       r={r}
       cx={svgCenter}
       cy={svgCenter}
       fill="transparent"
       stroke={strokePct !== circ ? color : ""} // remove colour as 0% sets full circumference
       strokeWidth={strokeWidth}
-      strokeDasharray={circ}
-      strokeDashoffset={percentage ? strokePct : 0}
+      // strokeDasharray={circ}
+      // strokeDashoffset={percentage ? strokePct : 0}
       strokeLinecap="round"
+      strokeDasharray={dashArray}
+      strokeDashoffset={dashOffset}
     ></circle>
   );
 };

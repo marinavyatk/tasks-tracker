@@ -14,6 +14,8 @@ const slice = createSlice({
   initialState,
   reducers: {
     setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
+      console.log("error for addform");
+      console.log(action.payload.error);
       state.error = action.payload.error;
     },
     setActiveTodo: (state, action: PayloadAction<{ todoId: string }>) => {
@@ -32,7 +34,7 @@ const slice = createSlice({
         state.status = "failed";
       })
 
-      .addMatcher(isFulfilled(authThunks.me), (state) => {
+      .addMatcher(isFulfilled(authThunks.me), (state, action: AnyAction) => {
         state.isInitialized = true;
       })
       .addMatcher(isRejected(authThunks.me), (state) => {

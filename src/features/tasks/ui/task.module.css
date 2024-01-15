@@ -10,6 +10,7 @@
 .taskText {
     color: #e7e7e7;
     font-size: 16px;
+    text-align: start;
 }
 
 .boxWithTitle {

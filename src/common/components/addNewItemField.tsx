@@ -1,7 +1,10 @@
-import React, { ChangeEvent, useState, KeyboardEvent } from "react";
+import React, { ChangeEvent, useState, KeyboardEvent, useEffect, memo } from "react";
 import { FormControl, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { handleChangeDraggable } from "common/commonFunctions";
+import { Simulate } from "react-dom/test-utils";
+import { useSelector } from "react-redux";
+import { selectAppError, selectTasks, selectTodolists } from "common/selectors";
 
 type AddNewItemField = {
   todoId?: string;
@@ -10,13 +13,24 @@ type AddNewItemField = {
   addItem: (newItemTitle: string) => void;
   error: string | null;
 };
-const AddNewItemField = (props: AddNewItemField) => {
+const AddNewItemField = memo((props: AddNewItemField) => {
+  console.log("AddNewItemField");
+
   const [content, setContent] = useState("");
+  // const error = useSelector(selectAppError);
+
+  // const todolists = useSelector(selectTodolists);
+  const tasks = useSelector(selectTasks);
+
+  useEffect(() => {
+    // if (!error) {
+    setContent("");
+    // }
+  }, [tasks]);
+
   const addNewItem = () => {
+    console.log(props.error);
     props.addItem(content);
-    if (!props.error) {
-      setContent("");
-    }
   };
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setContent(e.currentTarget.value);
@@ -34,7 +48,7 @@ const AddNewItemField = (props: AddNewItemField) => {
           placeholder={props.placeholder}
           sx={{
             width: props.width,
-            paddingRight: "13px",
+            paddingRight: "12px",
             "& .MuiOutlinedInput-input": {
               color: "#e7e7e7",
               padding: "9px",
@@ -59,7 +73,7 @@ const AddNewItemField = (props: AddNewItemField) => {
                 edge="end"
                 sx={{
                   backgroundColor: "#bb86fc",
-                  borderRadius: "0",
+                  borderRadius: "0 5px 5px 0",
                   color: "rgb(33 33 33)",
                   transition: "all 0.3s",
                   "&:hover": { backgroundColor: "#bb86fc", color: "#e7e7e7" },
@@ -73,6 +87,6 @@ const AddNewItemField = (props: AddNewItemField) => {
       </FormControl>
     </div>
   );
-};
+});
 
 export default AddNewItemField;

@@ -10,3 +10,4 @@ export const selectTodolistStatus = (state: AppRootStateType, todoId: string) =>
   state.todolists.find((tl) => tl.id === todoId)?.entityStatus;
 export const selectAppError = (state: AppRootStateType) => state.app.error;
 export const selectActiveTodo = (state: AppRootStateType) => state.app.activeTodo;
+export const selectUserEmail = (state: AppRootStateType) => state.auth.user;
