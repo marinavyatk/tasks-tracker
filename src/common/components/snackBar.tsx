@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectAppError } from "common/selectors";
@@ -9,35 +9,32 @@ const SnackBar = () => {
   const error = useSelector(selectAppError);
   const dispatch = useAppDispatch();
 
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (error) {
+      setOpen(true);
       // Внесите изменения в ваш код обработки ошибки здесь, если необходимо.
-      console.log("Handle error:", error);
     }
   }, [error]);
-
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    console.log(reason);
     if (reason === "clickaway") {
       return;
     }
-    dispatch(appActions.setAppError({ error: null }));
+    setOpen(false);
+    setTimeout(() => {
+      console.log("timeout");
+      dispatch(appActions.setAppError({ error: null }));
+    }, 1000);
   };
+  if (error === "notShow") return <></>;
   return (
-    <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
+    <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
       <Alert
         onClose={handleClose}
         variant="filled"
         severity="error"
         sx={{
           width: "100%",
-          // color: "primary.light",
-          // backgroundColor: "error.main",
-          // "& .MuiAlert-icon": {
-          //   "& > svg": {
-          //     color: "primary.light",
-          //   },
-          // },
         }}
       >
         {error}

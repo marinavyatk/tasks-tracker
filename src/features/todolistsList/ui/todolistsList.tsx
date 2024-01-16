@@ -106,7 +106,10 @@ const TodolistsList = () => {
               error={error}
             />
           </div>
-          <div className={s.todoBlock}>{todolistsForDisplay}</div>
+          <Grid container direction={"row"} className={s.todoBlock}>
+            {/*<div className={s.todoBlock}>{todolistsForDisplay}</div>*/}
+            {todolistsForDisplay}
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

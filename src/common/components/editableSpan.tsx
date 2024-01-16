@@ -22,6 +22,7 @@ const EditableSpan = (props: EditableSpanProps) => {
     setEditMode(true);
   };
   const deactivateEditMode = () => {
+    console.log("deactivateEditMode");
     handleChangeDraggable(props.todoId, props.taskId, "true");
     // setEditMode(false);
     if (!content.trim().length && props.removeTask) {
@@ -58,24 +59,36 @@ const EditableSpan = (props: EditableSpanProps) => {
           onKeyDown={deactivateEditModeOnEnter}
           variant="filled"
           onChange={changeContent}
+          fullWidth={true}
+          multiline={true}
           size={"small"}
           hiddenLabel
           sx={{
             input: {
               color: "#e7e7e7",
               backgroundColor: "#2e2e2e",
-              boxShadow: "0 0 10px 0px #171717",
+              // boxShadow: "0 0 10px 0px #171717",
               borderRadius: "5px",
               // height: "40px",
               height: "100%",
               borderBottom: "none",
               padding: "0",
               display: "block",
+              // outline: "none",
+              // border: "none",
+              boxShadow: "0px 0px 4px #bb86fc",
+              "& .MuiInput-multiline": {
+                color: "#e7e7e7",
+                backgroundColor: "#2e2e2e",
+                height: "10px",
+              },
             },
           }}
         />
       ) : (
-        <span onDoubleClick={activateEditMode}>{content}</span>
+        <div onDoubleClick={activateEditMode} style={{ flex: "1" }}>
+          {content}
+        </div>
       )}
     </>
   );

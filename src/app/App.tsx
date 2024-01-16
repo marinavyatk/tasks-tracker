@@ -4,19 +4,18 @@ import "./App.css";
 import TodolistsList from "features/todolistsList/ui/todolistsList";
 import LoginForm from "features/loginForm/ui/loginForm";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AppRootStateType, store, useAppDispatch } from "app/store";
+import { AppRootStateType, useAppDispatch } from "app/store";
 import { authThunks } from "features/loginForm/model/authReducer";
 import SnackBar from "common/components/snackBar";
 import Loader from "common/components/loader/loader";
 import { useSelector } from "react-redux";
-import { selectAppStatus, selectIsAuthorized } from "common/selectors";
+import { selectAppStatus } from "common/selectors";
 import { LinearProgress } from "@mui/material";
 
 function App() {
   const dispatch = useAppDispatch();
 
   const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized);
-  // const isAuthorized = useSelector(selectIsAuthorized);
   const appStatus = useSelector(selectAppStatus);
   useEffect(() => {
     dispatch(authThunks.me());

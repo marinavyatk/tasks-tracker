@@ -66,7 +66,6 @@ const LoginForm = () => {
                       margin="normal"
                       {...formik.getFieldProps("password")}
                       error={isPasswordError}
-                      autoComplete="current-password" // Добавленный атрибут
                       name="password" // Добавленный атрибут
                       id="password"
                     />

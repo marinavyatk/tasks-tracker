@@ -4,20 +4,21 @@ import SidebarSection from "features/sidebar/sidebarSection";
 import { useSelector } from "react-redux";
 import { selectTasks, selectTodolists, selectUserEmail } from "common/selectors";
 import { useAppDispatch } from "app/store";
-import { authActions, authThunks } from "features/loginForm/model/authReducer";
+import { authThunks } from "features/loginForm/model/authReducer";
 import { TaskStatuses } from "common/enums";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useEffect } from "react";
+import ReorderIcon from "@mui/icons-material/Reorder";
+import AppsIcon from "@mui/icons-material/Apps";
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
   const todolists = useSelector(selectTodolists);
   const tasks = useSelector(selectTasks);
-  const userEmail = useSelector(selectUserEmail);
-  useEffect(() => {
-    dispatch(authActions.changeUserEmail(userEmail));
-  }, [userEmail]);
+  const user = useSelector(selectUserEmail);
+  // useEffect(() => {
+  //   dispatch(authActions.changeUserEmail(user));
+  // }, [user]);
   const logOut = () => {
     dispatch(authThunks.logout());
   };
@@ -45,7 +46,7 @@ const Sidebar = () => {
         <Button onClick={logOut}>
           Log out &ensp; <LogoutIcon fontSize={"inherit"} />
         </Button>
-        <p className={s.userEmail}>{userEmail}</p>
+        <p className={s.user}>{user}</p>
       </div>
     </div>
   );

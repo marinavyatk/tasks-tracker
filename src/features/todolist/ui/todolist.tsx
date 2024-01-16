@@ -72,97 +72,100 @@ const Todolist = (props: Todolist) => {
     tasksForTodolist = tasks[props.todoId].filter((t) => t.status === TaskStatuses.Completed);
   }
   return (
-    <Card
-      sx={{
-        // minWidth: 275,
-        backgroundColor: "#383838",
-        width: "500px",
-        // textAlign: "center",
-        // minHeight: "150px"
-      }}
-      raised={true}
-      draggable={true}
-      onDragStart={() => props.onDragStart(props.todoId)}
-      onDragOver={handleDragOver}
-      onDrop={props.onDrop}
-      id={props.todoId}
-    >
-      <CardContent sx={{ padding: "20px 0" }}>
-        <Typography variant="h5" color="primary.light" gutterBottom sx={{ width: "80%", margin: " 5px auto" }}>
-          <EditableSpan content={props.todoTitle} changeTitle={changeTodoTitle} todoId={props.todoId} />{" "}
-          <IconButton onClick={handleDeleteTodolist} sx={{ padding: "0" }} disabled={disabled}>
-            <ClearIcon color={"primary"} />
-          </IconButton>
-        </Typography>
-        <AddNewItemField
-          width={"80%"}
-          placeholder={"Add new task..."}
-          addItem={handleAddTask}
-          error={error}
-          todoId={props.todoId}
-        />
-      </CardContent>
-      <div className={s.tasksBlock}>
-        {!tasksForTodolist.length ? (
-          <span className={s.noTasksString}>{`No ${currentFilter !== "all" ? currentFilter : ""} tasks`}</span>
-        ) : (
-          tasksForTodolist.map((task, index) => (
-            <Task
-              key={task.id}
-              title={task.title}
-              todoId={props.todoId}
-              taskId={task.id}
-              taskStatus={task.status}
-              todoEntityStatus={props.todoEntityStatus}
-              onDragStart={handleDragStart}
-              onDragOver={handleDragOver}
-              onDrop={() =>
-                handleChangeTaskOrder({
-                  todoId: props.todoId,
-                  taskId: dragStartTaskId,
-                  putAfterItemId: tasksForTodolist[index - 1]?.id || null,
-                })
-              }
-            />
-          ))
-        )}
-      </div>
-      {/*<div style={{ transition: "transform 0.3s ease-in-out" }}>*/}
-      <ProgressSlider progressValue={progressValue} />
-      {/*</div>*/}
-
-      <CardActions sx={{ padding: "0" }}>
-        <div className={s.buttonBlock}>
-          <Button
-            variant="outlined"
-            color={"secondary"}
-            value={"all"}
-            onClick={handleChangeFilter}
-            className={currentFilter === "all" ? s.activeFilter : ""}
-          >
-            All
-          </Button>
-          <Button
-            variant="outlined"
-            color={"secondary"}
-            value={"active"}
-            onClick={handleChangeFilter}
-            className={currentFilter === "active" ? s.activeFilter : ""}
-          >
-            Active
-          </Button>
-          <Button
-            variant="outlined"
-            color={"secondary"}
-            value={"completed"}
-            onClick={handleChangeFilter}
-            className={currentFilter === "completed" ? s.activeFilter : ""}
-          >
-            Completed
-          </Button>
+    <div>
+      <Card
+        sx={{
+          // minWidth: 275,
+          backgroundColor: "#313132",
+          // boxShadow: "0px 0px 4px #bb86fc",
+          width: "500px",
+          // textAlign: "center",
+          // minHeight: "150px"
+        }}
+        raised={true}
+        draggable={true}
+        onDragStart={() => props.onDragStart(props.todoId)}
+        onDragOver={handleDragOver}
+        onDrop={props.onDrop}
+        id={props.todoId}
+      >
+        <CardContent sx={{ padding: "20px 0" }}>
+          <Typography variant="h5" color="primary.light" gutterBottom sx={{ width: "80%", margin: " 5px auto" }}>
+            <EditableSpan content={props.todoTitle} changeTitle={changeTodoTitle} todoId={props.todoId} />{" "}
+            <IconButton onClick={handleDeleteTodolist} sx={{ padding: "0" }} disabled={disabled}>
+              <ClearIcon color={"primary"} />
+            </IconButton>
+          </Typography>
+          <AddNewItemField
+            width={"80%"}
+            placeholder={"Add new task..."}
+            addItem={handleAddTask}
+            error={error}
+            todoId={props.todoId}
+          />
+        </CardContent>
+        <div className={s.tasksBlock}>
+          {!tasksForTodolist.length ? (
+            <span className={s.noTasksString}>{`No ${currentFilter !== "all" ? currentFilter : ""} tasks`}</span>
+          ) : (
+            tasksForTodolist.map((task, index) => (
+              <Task
+                key={task.id}
+                title={task.title}
+                todoId={props.todoId}
+                taskId={task.id}
+                taskStatus={task.status}
+                todoEntityStatus={props.todoEntityStatus}
+                onDragStart={handleDragStart}
+                onDragOver={handleDragOver}
+                onDrop={() =>
+                  handleChangeTaskOrder({
+                    todoId: props.todoId,
+                    taskId: dragStartTaskId,
+                    putAfterItemId: tasksForTodolist[index - 1]?.id || null,
+                  })
+                }
+              />
+            ))
+          )}
         </div>
-      </CardActions>
-    </Card>
+        {/*<div style={{ transition: "transform 0.3s ease-in-out" }}>*/}
+        <ProgressSlider progressValue={progressValue} />
+        {/*</div>*/}
+
+        <CardActions sx={{ padding: "0" }}>
+          <div className={s.buttonBlock}>
+            <Button
+              variant="outlined"
+              color={"secondary"}
+              value={"all"}
+              onClick={handleChangeFilter}
+              className={currentFilter === "all" ? s.activeFilter : ""}
+            >
+              All
+            </Button>
+            <Button
+              variant="outlined"
+              color={"secondary"}
+              value={"active"}
+              onClick={handleChangeFilter}
+              className={currentFilter === "active" ? s.activeFilter : ""}
+            >
+              Active
+            </Button>
+            <Button
+              variant="outlined"
+              color={"secondary"}
+              value={"completed"}
+              onClick={handleChangeFilter}
+              className={currentFilter === "completed" ? s.activeFilter : ""}
+            >
+              Completed
+            </Button>
+          </div>
+        </CardActions>
+      </Card>
+    </div>
   );
 };
 

@@ -20,12 +20,14 @@ const slice = createSlice({
     builder
       .addCase(me.fulfilled, (state, action) => {
         state.isAuthorized = action.payload.isAuthorized;
+        state.user = action.payload.userData.login;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isAuthorized = action.payload.isAuthorized;
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.isAuthorized = action.payload.isAuthorized;
+        state.user = "";
       })
       .addMatcher(isPending(authThunks.me), (state) => {
         state.isAuthorized = true;
@@ -47,14 +49,15 @@ const me = createAppAsyncThunk<{ isAuthorized: boolean; userData: UserData }, un
     if (res.data.resultCode === ResultCode.Success) {
       return { isAuthorized: true, userData: res.data.data };
     } else {
-      return rejectWithValue(res.data.messages?.[0] ?? null);
+      return rejectWithValue("notShow"); // it is necessary so that the error is not shown on the login page when the user is not registered
     }
   },
 );
 
 const login = createAppAsyncThunk<{ isAuthorized: boolean }, DataForLogin>("auth/login", async (arg, thunkAPI) => {
-  const { rejectWithValue } = thunkAPI;
+  const { dispatch, rejectWithValue } = thunkAPI;
   const res = await AuthApi.logIn(arg);
+  dispatch(me());
   if (res.data.resultCode === ResultCode.Success) {
     return { isAuthorized: true };
   } else {

@@ -3,7 +3,7 @@ import { CommonResponse, Task, TaskResponse, UpdateTaskModel } from "common/type
 
 export const tasksApi = {
   fetchTasks(todoId: string) {
-    return instance.get<TaskResponse>(`todo-lists/${todoId}/tasks`);
+    return instance.get<TaskResponse>(`todo-lists/${todoId}/tasks`, { params: { count: 100 } });
   },
   createTask(todoId: string, taskTitle: string) {
     return instance.post<CommonResponse<{ item: Task }>>(`todo-lists/${todoId}/tasks`, { title: taskTitle });
