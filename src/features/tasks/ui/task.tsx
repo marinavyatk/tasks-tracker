@@ -59,7 +59,7 @@ const Task = (props: TaskProps) => {
           disabled={disabled}
           onChange={handleChangeTaskStatus}
           sx={{
-            color: "#bb86fc",
+            color: "#a486fc",
             marginLeft: "-9px",
           }}
         />

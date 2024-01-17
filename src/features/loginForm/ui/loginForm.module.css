@@ -9,6 +9,9 @@
     box-shadow: 0 0 20px #171717;
     width: 700px;
     height: 400px;
+    top: 0;
+    bottom: 0;
+
 }
 
 .formInputsBlock button {
@@ -16,12 +19,12 @@
 }
 
 .loginForm h1 {
-    color: #bb86fc;
+    color: #a486fc;
     margin-top: -10px;
 }
 
 .divider {
-    border: 2px solid #bb86fc;
+    border: 2px solid #a486fc;
     border-radius: 5px;
     height: 275px;
     margin-right: -19px;
@@ -56,15 +59,15 @@
 }
 
 .loginForm a {
-    color: #bb86fc;
+    color: #a486fc;
 }
 
 .loginForm a:visited {
-    color: #bb86fc;
+    color: #a486fc;
 }
 
 .loginForm a:hover {
-    color: #bb86fc;
+    color: #a486fc;
     text-shadow: 0 0 8px;
 }
 

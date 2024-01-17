@@ -42,6 +42,42 @@ function App() {
           <Route path={"/"} element={<TodolistsList />} />
         </Routes>
       </BrowserRouter>
+
+      {/*<div*/}
+      {/*  style={{*/}
+      {/*    position: "fixed",*/}
+      {/*    top: "0",*/}
+      {/*    right: "0",*/}
+      {/*    width: "650px",*/}
+      {/*    height: "650px",*/}
+      {/*    marginRight: "-300px",*/}
+      {/*    marginTop: "-300px",*/}
+      {/*    // backgroundColor: "#1ddecb",*/}
+      {/*    backgroundColor: "#1b5e60",*/}
+      {/*    // backgroundColor: "#183b3c",*/}
+      {/*    filter: "blur(180px)",*/}
+      {/*    borderRadius: "300px",*/}
+      {/*    zIndex: "-1",*/}
+      {/*  }}*/}
+      {/*/>*/}
+
+      {/*  <div*/}
+      {/*    style={{*/}
+      {/*      position: "absolute",*/}
+      {/*      bottom: "15%",*/}
+      {/*      left: "0",*/}
+      {/*      width: "350px",*/}
+      {/*      height: "350px",*/}
+      {/*      marginLeft: "-200px",*/}
+      {/*      // backgroundColor: "#1ddecb",*/}
+      {/*      backgroundColor: "#1b5e60",*/}
+
+      {/*      // backgroundColor: "#183b3c",*/}
+      {/*      filter: "blur(100px)",*/}
+      {/*      borderRadius: "300px",*/}
+      {/*      zIndex: "-1",*/}
+      {/*    }}*/}
+      {/*  />*/}
     </div>
   );
 }

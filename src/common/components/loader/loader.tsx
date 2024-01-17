@@ -10,10 +10,10 @@ const Loader = () => {
           <stop offset="0%" stopColor="#1ddecb" />
           <stop offset="33%" stopColor="#fff699" />
           <stop offset="67%" stopColor="#f78200" />
-          <stop offset="100%" stopColor="#bb86fc" />
+          <stop offset="100%" stopColor="#a486fc" />
         </linearGradient>
         <linearGradient id="grad2" x1="1" y1="0" x2="0" y2="0">
-          <stop offset="0%" stopColor="#bb86fc" />
+          <stop offset="0%" stopColor="#a486fc" />
           <stop offset="33%" stopColor="#b143b3" />
           <stop offset="67%" stopColor="#009cdf" />
           <stop offset="100%" stopColor="#1ddecb" />

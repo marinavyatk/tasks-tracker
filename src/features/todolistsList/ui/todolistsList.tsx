@@ -24,6 +24,7 @@ const TodolistsList = () => {
     }
     dispatch(todolistThunks.fetchTodolists());
   }, []);
+
   const [dragStartTodoId, setDragStartTodoId] = useState("");
   const dispatch = useAppDispatch();
   const isAuthorized = useSelector(selectIsAuthorized);
@@ -91,9 +92,16 @@ const TodolistsList = () => {
   //   event.preventDefault();
   // };
   return (
-    // <div>
     <Grid container justifyContent="center" direction="row">
-      <Grid item xs={2}>
+      <Grid
+        item
+        xs={2}
+        sx={{
+          // backgroundColor: "white",
+          top: "0px",
+          bottom: "0px",
+        }}
+      >
         <Sidebar /> {/*лучше внутри этого компонента запрашивать тудулисты или передавать их через пропсы?*/}
       </Grid>
       <Grid container item xs={10} justifyContent={"center"}>
@@ -106,14 +114,12 @@ const TodolistsList = () => {
               error={error}
             />
           </div>
-          <Grid container direction={"row"} className={s.todoBlock}>
-            {/*<div className={s.todoBlock}>{todolistsForDisplay}</div>*/}
+          <Grid container direction={"column"} className={s.todoBlock} sx={{ position: "relative" }}>
             {todolistsForDisplay}
           </Grid>
         </Grid>
       </Grid>
     </Grid>
-    // </div>
   );
 };
 

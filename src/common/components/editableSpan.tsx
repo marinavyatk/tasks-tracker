@@ -10,6 +10,7 @@ type EditableSpanProps = {
   content: string;
   changeTitle: (newTitle: string) => void;
   removeTask?: () => void;
+  isTodolistTitle?: boolean;
 };
 const EditableSpan = (props: EditableSpanProps) => {
   const [editMode, setEditMode] = useState(false);
@@ -49,12 +50,17 @@ const EditableSpan = (props: EditableSpanProps) => {
       deactivateEditMode();
     }
   };
+  const onFocusChangeHandler = () => {
+    handleChangeDraggable(props.todoId, props.taskId, "false");
+  };
+
   return (
     <>
       {editMode ? (
         <TextField
+          autoFocus
           value={content}
-          onFocus={() => handleChangeDraggable(props.todoId, props.taskId, "false")}
+          onFocus={onFocusChangeHandler}
           onBlur={deactivateEditMode}
           onKeyDown={deactivateEditModeOnEnter}
           variant="filled"
@@ -64,29 +70,37 @@ const EditableSpan = (props: EditableSpanProps) => {
           size={"small"}
           hiddenLabel
           sx={{
-            input: {
+            textarea: {
               color: "#e7e7e7",
-              backgroundColor: "#2e2e2e",
-              // boxShadow: "0 0 10px 0px #171717",
+              backgroundColor: "#5e6db7",
               borderRadius: "5px",
-              // height: "40px",
-              height: "100%",
-              borderBottom: "none",
+              lineHeight: "normal",
+              fontSize: "inherit",
+              // boxShadow: "0px 0px 4px #a486fc",
+              // height: "50%", - свойство высоты не работает
+            },
+            "& .MuiInputBase-multiline": {
               padding: "0",
-              display: "block",
-              // outline: "none",
-              // border: "none",
-              boxShadow: "0px 0px 4px #bb86fc",
-              "& .MuiInput-multiline": {
-                color: "#e7e7e7",
-                backgroundColor: "#2e2e2e",
-                height: "10px",
-              },
+            },
+            "& .MuiFilledInput-input": {
+              letterSpacing: "initial",
+            },
+            "& .MuiInputBase-root:before": {
+              // borderBottom: "none",
+              borderBottom: "1px solid transparent",
             },
           }}
         />
       ) : (
-        <div onDoubleClick={activateEditMode} style={{ flex: "1" }}>
+        <div
+          onDoubleClick={activateEditMode}
+          // style={props.isTodolistTitle ? {} : { flex: "1" }}
+          style={
+            props.isTodolistTitle
+              ? { borderBottom: "1px solid transparent" }
+              : { borderBottom: "0.9px solid transparent", flex: "1" }
+          }
+        >
           {content}
         </div>
       )}

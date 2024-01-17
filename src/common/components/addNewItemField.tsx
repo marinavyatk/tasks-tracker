@@ -54,10 +54,10 @@ const AddNewItemField = memo((props: AddNewItemField) => {
               padding: "9px",
             },
             "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#bb86fc",
+              borderColor: "#a486fc",
             },
             "&:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#bb86fc",
+              borderColor: "#a486fc",
             },
           }}
           onChange={handleInputChange}
@@ -72,11 +72,14 @@ const AddNewItemField = memo((props: AddNewItemField) => {
                 onClick={addNewItem}
                 edge="end"
                 sx={{
-                  backgroundColor: "#bb86fc",
+                  backgroundColor: "#a486fc",
                   borderRadius: "0 5px 5px 0",
                   color: "rgb(33 33 33)",
+                  // background: "rgb(187,134,252)",
+                  // background: "linear-gradient(124deg, rgba(187,134,252,1) 28%, rgba(29,222,203,1) 97%)",
+
                   transition: "all 0.3s",
-                  "&:hover": { backgroundColor: "#bb86fc", color: "#e7e7e7" },
+                  "&:hover": { backgroundColor: "#a486fc", color: "#e7e7e7" },
                 }}
               >
                 <AddIcon />

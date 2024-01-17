@@ -42,7 +42,11 @@ const SidebarSection = (props: SidebarSectionProps) => {
         )}
         {props.sectionName !== "All" && (
           <div className={s.item}>
-            <ProgressCircle color={"#1ddecb"} percentage={props.progressValue ? props.progressValue : 0} />
+            <ProgressCircle
+              color={"#1ddecb"}
+              // color={"#a96666"}
+              percentage={props.progressValue ? props.progressValue : 0}
+            />
           </div>
         )}
       </div>

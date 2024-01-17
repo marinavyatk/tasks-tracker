@@ -76,11 +76,15 @@ const Todolist = (props: Todolist) => {
       <Card
         sx={{
           // minWidth: 275,
-          backgroundColor: "#313132",
-          // boxShadow: "0px 0px 4px #bb86fc",
+          // backgroundColor: "#313132",
+          // backgroundColor: "#26292e",
+          backgroundColor: "rgba(39, 41, 45, 0.6);",
+          // boxShadow: "0px 0px 4px #a486fc",
           width: "500px",
           // textAlign: "center",
           // minHeight: "150px"
+
+          // background: "linear-gradient(180deg, rgba(49,49,50,1) 32%, rgba(88,88,88,1) 97%)",
         }}
         raised={true}
         draggable={true}
@@ -90,8 +94,18 @@ const Todolist = (props: Todolist) => {
         id={props.todoId}
       >
         <CardContent sx={{ padding: "20px 0" }}>
-          <Typography variant="h5" color="primary.light" gutterBottom sx={{ width: "80%", margin: " 5px auto" }}>
-            <EditableSpan content={props.todoTitle} changeTitle={changeTodoTitle} todoId={props.todoId} />{" "}
+          <Typography
+            variant="h5"
+            color="primary.light"
+            gutterBottom
+            sx={{ width: "80%", margin: " 5px auto", display: "flex", justifyContent: "center", fontSize: "30px" }}
+          >
+            <EditableSpan
+              content={props.todoTitle}
+              changeTitle={changeTodoTitle}
+              todoId={props.todoId}
+              isTodolistTitle
+            />{" "}
             <IconButton onClick={handleDeleteTodolist} sx={{ padding: "0" }} disabled={disabled}>
               <ClearIcon color={"primary"} />
             </IconButton>
@@ -141,6 +155,12 @@ const Todolist = (props: Todolist) => {
               value={"all"}
               onClick={handleChangeFilter}
               className={currentFilter === "all" ? s.activeFilter : ""}
+              sx={
+                {
+                  // background: "linear-gradient(124deg, rgba(187,134,252,1) 28%, rgba(29,222,203,1) 97%)",
+                  // color: "#313132",
+                }
+              }
             >
               All
             </Button>

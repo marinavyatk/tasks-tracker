@@ -1,7 +1,7 @@
 .task {
     display: flex;
     align-items: center;
-    border-bottom: 1px #bb86fc dashed;
+    border-bottom: 1px #a486fc dashed;
     width: 80%;
     justify-content: space-between;
 
