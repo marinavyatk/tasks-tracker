@@ -7,50 +7,88 @@
     /*background-color: #0e1116;*/
     background-color: rgb(5%, 7%, 9%, 0.8);
     position: fixed;
-    top: 0px;
-    bottom: 0px;
-    padding: 30px 0;
-    overflow-y:scroll;
-    /*width: 16%;*/
+    top: 0;
+    bottom: 0;
+    padding: 0 10px;
+    overflow-y: scroll;
     width: 16.66%; /*найти решение лучше*/
 
 
-
-
 }
-.logo{
+
+.logo {
+
+
     display: flex;
     justify-content: center;
     align-items: center;
     color: #a486fc;
-    color: #1ddecb;
+    /*color: #1ddecb;*/
     font-size: 20px;
-margin-bottom: 50px;
+    margin-bottom: 20px;
     letter-spacing: 1px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(231, 231, 231, 0.1)
     /*color: linear-gradient(90deg, rgba(114,205,172,1) 0%, rgba(187,134,252,1) 70%);*/
 
 }
-.logo p{
-    background-clip: text;
-    color: transparent;
-    /*background-image: linear-gradient(124deg, #a486fc 28%, rgba(29,222,203,1) 97%);*/
-    background-image: linear-gradient(124deg, rgba(29,222,203,1) 28%, #a486fc 97%);
+
+.logo p {
+    /*background-clip: text;*/
+    /*color: transparent;*/
+    /*!*background-image: linear-gradient(124deg, #a486fc 28%, rgba(29,222,203,1) 97%);*!*/
+    /*background-image: linear-gradient(124deg, rgba(29, 222, 203, 1) 28%, #a486fc 97%);*/
 }
 
 
-
-
-
-
-
-.user{
-    color: #a486fc;
+.user {
+    /*color: #a486fc;*/
     letter-spacing: 1px;
 }
-.sidebarFooter{
-    position: relative;
-    right: 0;
-left: 0;
-    bottom: 0;
+
+.sidebarFooter {
+    border-top: 1px solid rgba(231, 231, 231, 0.1);
+    padding: 20px 0;
+    /*position: relative;*/
+    /*right: 0;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    /*color: #e7e7e7;*/
+    /*background-color: rgba(231, 231, 231, 0.1);*/
+
 }
 
+.buttonsPanel{
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    flex:1;
+    background-color: rgba(231, 231, 231, 0.1);
+    /*background-color: #222428;*/
+    /*border: 1px solid rgba(49, 49, 49, 0.71);*/
+    margin-bottom: 20px;
+    border-radius: 5px;
+    height: 50px;
+}
+
+.buttonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 1px solid rgba(49, 49, 49, 0.71);*/
+    /*padding: 10px;*/
+    /*margin-bottom: 20px;*/
+    flex: 1;
+}
+
+.buttonContainer:hover{
+    /*outline: 1px solid #a8a8a8;*/
+    /*border-radius: 5px;*/
+}
+.subTitle{
+    text-align: start;
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #a8a8a8;
+    padding: 0 4px;
+}

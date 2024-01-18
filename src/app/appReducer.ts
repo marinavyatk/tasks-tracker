@@ -1,5 +1,5 @@
 import { AnyAction, createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
-import { RequestStatus } from "common/types";
+import { ListsDirection, RequestStatus } from "common/types";
 import { authThunks } from "features/loginForm/model/authReducer";
 
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
   status: "idle" as RequestStatus,
   error: null as string | null,
   activeTodo: "All",
+  listsDirection: "column" as ListsDirection,
 };
 
 const slice = createSlice({
@@ -20,6 +21,9 @@ const slice = createSlice({
     },
     setActiveTodo: (state, action: PayloadAction<{ todoId: string }>) => {
       state.activeTodo = action.payload.todoId;
+    },
+    setListsDirection: (state, action: PayloadAction<{ direction: ListsDirection }>) => {
+      state.listsDirection = action.payload.direction;
     },
   },
   extraReducers: (builder) => {

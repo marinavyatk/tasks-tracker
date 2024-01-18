@@ -85,3 +85,5 @@ export type DataForLogin = {
   rememberMe: boolean;
   captcha?: boolean;
 };
+
+export type ListsDirection = "row" | "row-reverse" | "column" | "column-reverse";

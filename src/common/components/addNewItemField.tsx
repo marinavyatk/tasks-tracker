@@ -79,7 +79,7 @@ const AddNewItemField = memo((props: AddNewItemField) => {
                   // background: "linear-gradient(124deg, rgba(187,134,252,1) 28%, rgba(29,222,203,1) 97%)",
 
                   transition: "all 0.3s",
-                  "&:hover": { backgroundColor: "#a486fc", color: "#e7e7e7" },
+                  "&:hover": { backgroundColor: "#a486fc", color: "#e6e6e6" },
                 }}
               >
                 <AddIcon />

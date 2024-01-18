@@ -9,6 +9,7 @@ import {
   selectAppError,
   selectAppStatus,
   selectIsAuthorized,
+  selectListsDirection,
   selectTodolists,
 } from "common/selectors";
 import s from "./todolistsList.module.css";
@@ -16,6 +17,7 @@ import Sidebar from "features/sidebar/sidebar";
 import { Grid } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import { tasksThunks } from "features/tasks/model/tasksReducer";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 const TodolistsList = () => {
   useEffect(() => {
@@ -31,6 +33,8 @@ const TodolistsList = () => {
   const todolists = useSelector(selectTodolists);
   const activeTodo = useSelector(selectActiveTodo);
   const error = useSelector(selectAppError);
+  const listsDirection = useSelector(selectListsDirection);
+
   const addTodolist = (newTodoTitle: string) => {
     dispatch(todolistThunks.createTodolist(newTodoTitle));
   };
@@ -92,29 +96,26 @@ const TodolistsList = () => {
   //   event.preventDefault();
   // };
   return (
-    <Grid container justifyContent="center" direction="row">
+    <Grid container justifyContent="center" sx={{ padding: "20px 0" }}>
       <Grid
         item
         xs={2}
-        sx={{
-          // backgroundColor: "white",
-          top: "0px",
-          bottom: "0px",
-        }}
+        sx={
+          {
+            // backgroundColor: "white",
+            // top: "0px",
+            // bottom: "0px",
+          }
+        }
       >
         <Sidebar /> {/*лучше внутри этого компонента запрашивать тудулисты или передавать их через пропсы?*/}
       </Grid>
       <Grid container item xs={10} justifyContent={"center"}>
         <Grid item>
-          <div className={s.addItemField}>
-            <AddNewItemField
-              width={"494px"}
-              placeholder={"Let`s create a list..."}
-              addItem={addTodolist}
-              error={error}
-            />
-          </div>
-          <Grid container direction={"column"} className={s.todoBlock} sx={{ position: "relative" }}>
+          {/*<div className={s.addItemField}>*/}
+          <AddNewItemField width={"494px"} placeholder={"Let`s create a list..."} addItem={addTodolist} error={error} />
+          {/*</div>*/}
+          <Grid container direction={listsDirection} className={s.todoBlock} sx={{ position: "relative" }}>
             {todolistsForDisplay}
           </Grid>
         </Grid>
