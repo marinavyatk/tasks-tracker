@@ -18,6 +18,8 @@ import { Grid } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import { tasksThunks } from "features/tasks/model/tasksReducer";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import { appActions } from "app/appReducer";
+import { ListsDirection } from "common/types";
 
 const TodolistsList = () => {
   useEffect(() => {
@@ -25,6 +27,11 @@ const TodolistsList = () => {
       return;
     }
     dispatch(todolistThunks.fetchTodolists());
+
+    const direction = localStorage.getItem("direction") as ListsDirection;
+    if (direction) {
+      dispatch(appActions.setListsDirection({ direction: direction }));
+    }
   }, []);
 
   const [dragStartTodoId, setDragStartTodoId] = useState("");

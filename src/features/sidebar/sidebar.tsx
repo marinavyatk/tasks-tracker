@@ -33,6 +33,7 @@ const Sidebar = () => {
   });
   const changeDirection = (direction: ListsDirection) => {
     dispatch(appActions.setListsDirection({ direction }));
+    localStorage.setItem("direction", direction);
   };
 
   return (
