@@ -23,7 +23,7 @@
     justify-content: center;
     align-items: center;
     color: #a486fc;
-    /*color: #1ddecb;*/
+    color: #1ddecb;
     font-size: 20px;
     margin-bottom: 20px;
     letter-spacing: 1px;
@@ -34,10 +34,10 @@
 }
 
 .logo p {
-    /*background-clip: text;*/
-    /*color: transparent;*/
-    /*!*background-image: linear-gradient(124deg, #a486fc 28%, rgba(29,222,203,1) 97%);*!*/
-    /*background-image: linear-gradient(124deg, rgba(29, 222, 203, 1) 28%, #a486fc 97%);*/
+    background-clip: text;
+    color: transparent;
+    /*background-image: linear-gradient(124deg, #a486fc 28%, rgba(29,222,203,1) 97%);*/
+    background-image: linear-gradient(124deg, rgba(29, 222, 203, 1) 28%, #a486fc 97%);
 }
 
 
@@ -79,11 +79,13 @@
     /*padding: 10px;*/
     /*margin-bottom: 20px;*/
     flex: 1;
+    transition: 0.5s;
 }
 
 .buttonContainer:hover{
+    background-color: rgba(231, 231, 231, 0.15);
     /*outline: 1px solid #a8a8a8;*/
-    /*border-radius: 5px;*/
+    border-radius: 5px;
 }
 .subTitle{
     text-align: start;

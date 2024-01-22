@@ -33,6 +33,7 @@
     padding: 0 5px 0 8px;
     border-left: 3px solid #a486fc;
     width: 100%;
+    transition: 0.5s;
 }
 .inner:hover{
     /*background-color: rgba(49, 49, 49, 0.71)*/

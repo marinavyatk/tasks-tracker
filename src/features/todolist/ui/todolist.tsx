@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button, Card, CardActions, CardContent, IconButton, Typography } from "@mui/material";
 import EditableSpan from "common/components/editableSpan";
 import s from "./todolist.module.css";
 import ProgressSlider from "common/components/progressSlider";
 import { useSelector } from "react-redux";
-import { selectAppError, selectAppStatus, selectTasks } from "common/selectors";
+import { selectAppError, selectTasks } from "common/selectors";
 import Task from "features/tasks/ui/task";
 import { useAppDispatch } from "app/store";
 import { tasksThunks } from "features/tasks/model/tasksReducer";
@@ -28,9 +28,6 @@ const Todolist = (props: Todolist) => {
   const [dragStartTaskId, setDragStartTaskId] = useState("");
   const dispatch = useAppDispatch();
   const tasks = useSelector(selectTasks);
-  // useEffect(() => {
-  //   dispatch(tasksThunks.fetchTasks(props.todoId));
-  // }, [props.todoId]);
   const completedTasks = tasks[props.todoId]
     ? tasks[props.todoId].filter((task) => task.status === TaskStatuses.Completed).length
     : 0;
@@ -71,20 +68,36 @@ const Todolist = (props: Todolist) => {
   if (currentFilter === "completed") {
     tasksForTodolist = tasks[props.todoId].filter((t) => t.status === TaskStatuses.Completed);
   }
+  const tasksForDisplay = !tasksForTodolist.length ? (
+    <span className={s.noTasksString}>{`No ${currentFilter !== "all" ? currentFilter : ""} tasks`}</span>
+  ) : (
+    tasksForTodolist.map((task, index) => (
+      <Task
+        key={task.id}
+        title={task.title}
+        todoId={props.todoId}
+        taskId={task.id}
+        taskStatus={task.status}
+        todoEntityStatus={props.todoEntityStatus}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDrop={() =>
+          handleChangeTaskOrder({
+            todoId: props.todoId,
+            taskId: dragStartTaskId,
+            putAfterItemId: tasksForTodolist[index - 1]?.id || null,
+          })
+        }
+      />
+    ))
+  );
+
   return (
     <div>
       <Card
         sx={{
-          // minWidth: 275,
-          // backgroundColor: "#313132",
-          // backgroundColor: "#26292e",
           backgroundColor: "rgba(39, 41, 45, 0.6);",
-          // boxShadow: "0px 0px 4px #a486fc",
           width: "500px",
-          // textAlign: "center",
-          // minHeight: "150px"
-
-          // background: "linear-gradient(180deg, rgba(49,49,50,1) 32%, rgba(88,88,88,1) 97%)",
         }}
         raised={true}
         draggable={true}
@@ -98,7 +111,14 @@ const Todolist = (props: Todolist) => {
             variant="h5"
             color="primary.light"
             gutterBottom
-            sx={{ width: "80%", margin: " 5px auto", display: "flex", justifyContent: "center", fontSize: "30px" }}
+            sx={{
+              width: "80%",
+              margin: " 5px auto",
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "30px",
+              lineHeight: "normal",
+            }}
           >
             <EditableSpan
               content={props.todoTitle}
@@ -118,31 +138,7 @@ const Todolist = (props: Todolist) => {
             todoId={props.todoId}
           />
         </CardContent>
-        <div className={s.tasksBlock}>
-          {!tasksForTodolist.length ? (
-            <span className={s.noTasksString}>{`No ${currentFilter !== "all" ? currentFilter : ""} tasks`}</span>
-          ) : (
-            tasksForTodolist.map((task, index) => (
-              <Task
-                key={task.id}
-                title={task.title}
-                todoId={props.todoId}
-                taskId={task.id}
-                taskStatus={task.status}
-                todoEntityStatus={props.todoEntityStatus}
-                onDragStart={handleDragStart}
-                onDragOver={handleDragOver}
-                onDrop={() =>
-                  handleChangeTaskOrder({
-                    todoId: props.todoId,
-                    taskId: dragStartTaskId,
-                    putAfterItemId: tasksForTodolist[index - 1]?.id || null,
-                  })
-                }
-              />
-            ))
-          )}
-        </div>
+        <div className={s.tasksBlock}>{tasksForDisplay}</div>
         {/*<div style={{ transition: "transform 0.3s ease-in-out" }}>*/}
         <ProgressSlider progressValue={progressValue} />
         {/*</div>*/}
@@ -155,12 +151,6 @@ const Todolist = (props: Todolist) => {
               value={"all"}
               onClick={handleChangeFilter}
               className={currentFilter === "all" ? s.activeFilter : ""}
-              sx={
-                {
-                  // background: "linear-gradient(124deg, rgba(187,134,252,1) 28%, rgba(29,222,203,1) 97%)",
-                  // color: "#313132",
-                }
-              }
             >
               All
             </Button>

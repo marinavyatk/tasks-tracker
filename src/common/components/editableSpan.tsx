@@ -72,11 +72,13 @@ const EditableSpan = (props: EditableSpanProps) => {
           sx={{
             textarea: {
               color: "#e7e7e7",
-              backgroundColor: "#5e6db7",
+              // backgroundColor: "#5e6db7",
+              backgroundColor: "#222428",
+              // backgroundColor: "transparent",
               borderRadius: "5px",
-              lineHeight: "normal",
-              fontSize: "inherit",
-              // boxShadow: "0px 0px 4px #a486fc",
+              // lineHeight: "normal",
+              textAlign: props.isTodolistTitle ? "center" : "start",
+              fontSize: props.isTodolistTitle ? "30px" : "inherit",
               // height: "50%", - свойство высоты не работает
             },
             "& .MuiInputBase-multiline": {
@@ -84,9 +86,9 @@ const EditableSpan = (props: EditableSpanProps) => {
             },
             "& .MuiFilledInput-input": {
               letterSpacing: "initial",
+              // padding: "7.5px 0 0 0",
             },
             "& .MuiInputBase-root:before": {
-              // borderBottom: "none",
               borderBottom: "1px solid transparent",
             },
           }}
@@ -94,7 +96,6 @@ const EditableSpan = (props: EditableSpanProps) => {
       ) : (
         <div
           onDoubleClick={activateEditMode}
-          // style={props.isTodolistTitle ? {} : { flex: "1" }}
           style={
             props.isTodolistTitle
               ? { borderBottom: "1px solid transparent" }
