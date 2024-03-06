@@ -2,12 +2,6 @@
     margin: 5px 0;
     /*padding: 0 10px;*/
 }
-
-/*.sidebarSection:hover {*/
-/*    background-color: #232323;*/
-/*    border: none;*/
-/*}*/
-
 .sidebarSection:first-child{
     display: flex;
     align-items: center;
@@ -51,11 +45,14 @@
 
 }
 .activeTodo{
-    /*color: #a486fc;*/
-    box-shadow: 0px 0px 4px #a486fc;
+    box-shadow: 0 0 4px #a486fc;
 }
 .activeTodo:hover{
     border: 1px solid #a486fc;
     border-left: 3px solid #a486fc;
     background-color: rgb(73%, 53%, 99%, 0.04);
+}
+.hovered {
+    border-top: 2px solid #a486fc;
+    transition: none;
 }

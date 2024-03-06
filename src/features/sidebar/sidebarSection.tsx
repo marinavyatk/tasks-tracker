@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "features/sidebar/sidebarSection.module.css";
 import ProgressCircle from "common/components/ProgressCircle/ProgressCircle";
 import { useAppDispatch } from "app/store";
@@ -17,11 +17,15 @@ type SidebarSectionProps = {
   progressValue?: number;
   todoId: string;
   badgeContent?: number;
+  onDragStart?: (todoId: string) => void;
+  onDrop?: () => void;
 };
 
 const SidebarSection = (props: SidebarSectionProps) => {
   const dispatch = useAppDispatch();
   const activeTodo = useSelector(selectActiveTodo);
+  const [hovered, setHovered] = useState(false);
+
   const [play] = useSound(clickSound);
   const sound = useSelector(selectSound);
   const playSound = (sound: Sound) => {
@@ -33,9 +37,24 @@ const SidebarSection = (props: SidebarSectionProps) => {
     dispatch(appActions.setActiveTodo({ todoId }));
     playSound(sound);
   };
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
   return (
-    <div className={s.sidebarSection} onClick={() => handleClick(props.todoId)}>
-      <div className={`${s.inner} ${activeTodo === props.todoId ? s.activeTodo : ""}`}>
+    <div
+      className={`${s.sidebarSection} `}
+      onClick={() => handleClick(props.todoId)}
+      draggable={true}
+      onDragStart={() => props.onDragStart && props.onDragStart(props.todoId)}
+      onDrop={() => {
+        props.onDrop && props.onDrop();
+        setHovered(false);
+      }}
+      onDragOver={handleDragOver}
+      onDragEnter={() => setHovered(true)}
+      onDragLeave={() => setHovered(false)}
+    >
+      <div className={`${s.inner} ${activeTodo === props.todoId ? s.activeTodo : ""} ${hovered ? s.hovered : ""}`}>
         {props.sectionName !== "All" ? (
           // <div className={s.item}>
           <p>{props.sectionName}</p>

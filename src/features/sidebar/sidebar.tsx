@@ -17,6 +17,8 @@ import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import useSound from "use-sound";
 // @ts-ignore
 import clickSound from "assets/clickSound.mp3";
+import { useState } from "react";
+import { todolistThunks } from "features/todolist/model/todolistReducer";
 
 type Sidebar = {
   setSidebarHidden: (hidden: boolean) => void;
@@ -24,12 +26,16 @@ type Sidebar = {
 
 const Sidebar = (props: Sidebar) => {
   const dispatch = useAppDispatch();
+  const [play] = useSound(clickSound);
+  //useSelector block
   const todolists = useSelector(selectTodolists);
   const tasks = useSelector(selectTasks);
   const user = useSelector(selectUserEmail);
   const listsDirection = useSelector(selectListsDirection);
-  const [play] = useSound(clickSound);
   const sound = useSelector(selectSound);
+
+  const [dragStartTodoId, setDragStartTodoId] = useState("");
+
   const playSound = (sound: Sound) => {
     if (sound === "on") {
       play();
@@ -41,12 +47,40 @@ const Sidebar = (props: Sidebar) => {
   const logOut = () => {
     dispatch(authThunks.logout());
   };
-  const sections = todolists.map((tl) => {
+  const handleDragStart = (todoId: string) => {
+    setDragStartTodoId(todoId);
+  };
+  const changeTodoOrder = (data: { todoId: string; putAfterItemId: string | null }) => {
+    console.log("todoId:");
+    console.log(data.todoId);
+    console.log("putAfterItemId:");
+    console.log(data.putAfterItemId);
+    dispatch(todolistThunks.changeTodolistOrder(data));
+  };
+
+  const sections = todolists.map((tl, index) => {
     const completedTasks = tasks[tl.id]
       ? tasks[tl.id].filter((task) => task.status === TaskStatuses.Completed).length
       : 0;
     const progressValue = completedTasks === 0 ? 0 : Math.round((completedTasks / tasks[tl.id].length) * 100);
-    return <SidebarSection sectionName={tl.title} key={tl.id} progressValue={progressValue} todoId={tl.id} />;
+    const handleChangeTodoOrder = () => {
+      if (dragStartTodoId !== todolists[index]?.id) {
+        changeTodoOrder({
+          todoId: dragStartTodoId,
+          putAfterItemId: todolists[index - 1]?.id || null,
+        });
+      }
+    };
+    return (
+      <SidebarSection
+        sectionName={tl.title}
+        key={tl.id}
+        progressValue={progressValue}
+        todoId={tl.id}
+        onDragStart={handleDragStart}
+        onDrop={handleChangeTodoOrder}
+      />
+    );
   });
   const changeDirection = (direction: ListsDirection) => {
     dispatch(appActions.setListsDirection({ direction }));
