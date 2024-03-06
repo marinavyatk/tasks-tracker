@@ -19,7 +19,8 @@ import { Navigate } from "react-router-dom";
 import { tasksThunks } from "features/tasks/model/tasksReducer";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { appActions } from "app/appReducer";
-import { ListsDirection } from "common/types";
+import { ListsDirection, Sound } from "common/types";
+import { HiddenMenuTrigger } from "common/components/hiddenMenuTrigger/hiddenMenuTrigger";
 
 const TodolistsList = () => {
   useEffect(() => {
@@ -32,8 +33,13 @@ const TodolistsList = () => {
     if (direction) {
       dispatch(appActions.setListsDirection({ direction: direction }));
     }
+    const sound = localStorage.getItem("sound") as Sound;
+    if (sound) {
+      dispatch(appActions.setSound({ sound: sound }));
+    }
   }, []);
 
+  const [sidebarHidden, setSidebarHidden] = useState(true);
   const [dragStartTodoId, setDragStartTodoId] = useState("");
   const dispatch = useAppDispatch();
   const isAuthorized = useSelector(selectIsAuthorized);
@@ -99,35 +105,24 @@ const TodolistsList = () => {
             );
           });
 
-  // const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-  //   event.preventDefault();
-  // };
+  //   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+  //     event.preventDefault();
+  //   };
+
   return (
-    <Grid container justifyContent="center" sx={{ padding: "20px 0" }}>
-      <Grid
-        item
-        xs={2}
-        sx={
-          {
-            // backgroundColor: "white",
-            // top: "0px",
-            // bottom: "0px",
-          }
-        }
-      >
-        <Sidebar /> {/*лучше внутри этого компонента запрашивать тудулисты или передавать их через пропсы?*/}
-      </Grid>
-      <Grid container item xs={10} justifyContent={"center"}>
-        <Grid item>
-          {/*<div className={s.addItemField}>*/}
-          <AddNewItemField width={"494px"} placeholder={"Let`s create a list..."} addItem={addTodolist} error={error} />
-          {/*</div>*/}
-          <Grid container direction={listsDirection} className={s.todoBlock} sx={{ position: "relative" }}>
-            {todolistsForDisplay}
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+    <div className={s.mainContainer}>
+      {sidebarHidden ? (
+        <HiddenMenuTrigger onClick={setSidebarHidden} />
+      ) : (
+        <Sidebar setSidebarHidden={setSidebarHidden} />
+      )}
+      <div className={s.todoBlock}>
+        <AddNewItemField width={"494px"} placeholder={"Let`s create a list..."} addItem={addTodolist} error={error} />
+        <div className={`${s.todos} ${listsDirection === "column" ? s.columnOrientation : s.rowOrientation}`}>
+          {todolistsForDisplay}
+        </div>
+      </div>
+    </div>
   );
 };
 

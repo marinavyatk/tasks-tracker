@@ -6,6 +6,11 @@ import { appActions } from "app/appReducer";
 import { Badge } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectActiveTodo } from "common/selectors";
+import useSound from "use-sound";
+// @ts-ignore
+import clickSound from "assets/clickSound.mp3";
+import { selectSound } from "common/selectors";
+import { Sound } from "common/types";
 
 type SidebarSectionProps = {
   sectionName: string;
@@ -17,8 +22,16 @@ type SidebarSectionProps = {
 const SidebarSection = (props: SidebarSectionProps) => {
   const dispatch = useAppDispatch();
   const activeTodo = useSelector(selectActiveTodo);
+  const [play] = useSound(clickSound);
+  const sound = useSelector(selectSound);
+  const playSound = (sound: Sound) => {
+    if (sound === "on") {
+      play();
+    }
+  };
   const handleClick = (todoId: string) => {
     dispatch(appActions.setActiveTodo({ todoId }));
+    playSound(sound);
   };
   return (
     <div className={s.sidebarSection} onClick={() => handleClick(props.todoId)}>

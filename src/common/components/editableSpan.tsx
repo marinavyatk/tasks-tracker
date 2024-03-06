@@ -61,7 +61,7 @@ const EditableSpan = (props: EditableSpanProps) => {
           autoFocus
           value={content}
           onFocus={onFocusChangeHandler}
-          onBlur={deactivateEditMode}
+          // onBlur={deactivateEditMode}
           onKeyDown={deactivateEditModeOnEnter}
           variant="filled"
           onChange={changeContent}
@@ -72,21 +72,24 @@ const EditableSpan = (props: EditableSpanProps) => {
           sx={{
             textarea: {
               color: "#e7e7e7",
-              // backgroundColor: "#5e6db7",
-              backgroundColor: "#222428",
+              backgroundColor: "#5e6db7",
+              // backgroundColor: "#222428",
               // backgroundColor: "transparent",
               borderRadius: "5px",
               // lineHeight: "normal",
               textAlign: props.isTodolistTitle ? "center" : "start",
               fontSize: props.isTodolistTitle ? "30px" : "inherit",
               // height: "50%", - свойство высоты не работает
+              height: "100%",
             },
             "& .MuiInputBase-multiline": {
               padding: "0",
+              height: "100%",
             },
             "& .MuiFilledInput-input": {
               letterSpacing: "initial",
-              // padding: "7.5px 0 0 0",
+              // padding: "5.5px 0 0 0",
+              height: "100%",
             },
             "& .MuiInputBase-root:before": {
               borderBottom: "1px solid transparent",

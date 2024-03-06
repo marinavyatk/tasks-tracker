@@ -5,6 +5,11 @@ import { handleChangeDraggable } from "common/commonFunctions";
 import { Simulate } from "react-dom/test-utils";
 import { useSelector } from "react-redux";
 import { selectAppError, selectTasks, selectTodolists } from "common/selectors";
+import useSound from "use-sound";
+// @ts-ignore
+import clickSound from "assets/clickSound.mp3";
+import { selectSound } from "common/selectors";
+import { Sound } from "common/types";
 
 type AddNewItemField = {
   todoId?: string;
@@ -21,7 +26,13 @@ const AddNewItemField = memo((props: AddNewItemField) => {
 
   // const todolists = useSelector(selectTodolists);
   const tasks = useSelector(selectTasks);
-
+  const [play] = useSound(clickSound);
+  const sound = useSelector(selectSound);
+  const playSound = (sound: Sound) => {
+    if (sound === "on") {
+      play();
+    }
+  };
   useEffect(() => {
     // if (!error) {
     setContent("");
@@ -29,8 +40,9 @@ const AddNewItemField = memo((props: AddNewItemField) => {
   }, [tasks]);
 
   const addNewItem = () => {
-    console.log(props.error);
+    // console.log(props.error);
     props.addItem(content);
+    playSound(sound);
   };
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setContent(e.currentTarget.value);
@@ -48,6 +60,7 @@ const AddNewItemField = memo((props: AddNewItemField) => {
           placeholder={props.placeholder}
           sx={{
             width: props.width,
+            minWidth: "300px",
             paddingRight: "12px",
             "& .MuiOutlinedInput-input": {
               color: "#e7e7e7",

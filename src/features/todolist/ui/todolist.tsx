@@ -12,7 +12,11 @@ import { tasksThunks } from "features/tasks/model/tasksReducer";
 import { TaskStatuses } from "common/enums";
 import { todolistActions, todolistThunks } from "features/todolist/model/todolistReducer";
 import AddNewItemField from "common/components/addNewItemField";
-import { Filter, RequestStatus } from "common/types";
+import { Filter, RequestStatus, Sound } from "common/types";
+import useSound from "use-sound";
+// @ts-ignore
+import clickSound from "assets/clickSound.mp3";
+import { selectSound } from "common/selectors";
 
 type Todolist = {
   todoTitle: string;
@@ -28,6 +32,13 @@ const Todolist = (props: Todolist) => {
   const [dragStartTaskId, setDragStartTaskId] = useState("");
   const dispatch = useAppDispatch();
   const tasks = useSelector(selectTasks);
+  const [play] = useSound(clickSound);
+  const sound = useSelector(selectSound);
+  const playSound = (sound: Sound) => {
+    if (sound === "on") {
+      play();
+    }
+  };
   const completedTasks = tasks[props.todoId]
     ? tasks[props.todoId].filter((task) => task.status === TaskStatuses.Completed).length
     : 0;
@@ -40,12 +51,14 @@ const Todolist = (props: Todolist) => {
   };
   const handleDeleteTodolist = () => {
     dispatch(todolistThunks.deleteTodolist(props.todoId));
+    playSound(sound);
   };
   const handleChangeFilter = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const filterValue = e.currentTarget.value as Filter;
     console.log(filterValue);
     todolistActions.changeFilter({ todoId: props.todoId, filter: filterValue });
     setCurrentFilter(filterValue);
+    playSound(sound);
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -98,6 +111,7 @@ const Todolist = (props: Todolist) => {
         sx={{
           backgroundColor: "rgba(39, 41, 45, 0.6);",
           width: "500px",
+          minWidth: "300px",
         }}
         raised={true}
         draggable={true}
@@ -118,6 +132,7 @@ const Todolist = (props: Todolist) => {
               justifyContent: "center",
               fontSize: "30px",
               lineHeight: "normal",
+              height: "35.5px",
             }}
           >
             <EditableSpan
@@ -139,9 +154,7 @@ const Todolist = (props: Todolist) => {
           />
         </CardContent>
         <div className={s.tasksBlock}>{tasksForDisplay}</div>
-        {/*<div style={{ transition: "transform 0.3s ease-in-out" }}>*/}
         <ProgressSlider progressValue={progressValue} />
-        {/*</div>*/}
 
         <CardActions sx={{ padding: "0" }}>
           <div className={s.buttonBlock}>

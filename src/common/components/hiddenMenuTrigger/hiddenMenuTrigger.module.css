@@ -1,0 +1,20 @@
+.triggerContainer {
+    background-color: #212121;
+    box-shadow: 0 0 10px 1px #385c60;
+    background-color: #222428;
+
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 40px;
+    height: 40px;
+    border-radius: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    transition: all 0.3s;
+}
+.triggerContainer:hover{
+    background-color: #1d3133;
+}

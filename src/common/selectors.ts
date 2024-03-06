@@ -13,3 +13,4 @@ export const selectAppError = (state: AppRootStateType) => state.app.error;
 export const selectActiveTodo = (state: AppRootStateType) => state.app.activeTodo;
 export const selectUserEmail = (state: AppRootStateType) => state.auth.user;
 export const selectListsDirection = (state: AppRootStateType) => state.app.listsDirection;
+export const selectSound = (state: AppRootStateType) => state.app.sound;

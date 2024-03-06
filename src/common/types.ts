@@ -87,3 +87,4 @@ export type DataForLogin = {
 };
 
 export type ListsDirection = "row" | "row-reverse" | "column" | "column-reverse";
+export type Sound = "on" | "off";

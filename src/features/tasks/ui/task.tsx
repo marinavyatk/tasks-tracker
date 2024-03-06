@@ -6,7 +6,12 @@ import s from "./task.module.css";
 import { useAppDispatch } from "app/store";
 import { TaskStatuses } from "common/enums";
 import { tasksThunks } from "features/tasks/model/tasksReducer";
-import { RequestStatus } from "common/types";
+import { RequestStatus, Sound } from "common/types";
+import useSound from "use-sound";
+// @ts-ignore
+import clickSound from "assets/clickSound.mp3";
+import { selectSound } from "common/selectors";
+import { useSelector } from "react-redux";
 
 type TaskProps = {
   todoId: string;
@@ -22,12 +27,20 @@ const Task = (props: TaskProps) => {
   const dispatch = useAppDispatch();
   const todoStatus = props.todoEntityStatus;
   const disabled = todoStatus === "loading";
+  const [play] = useSound(clickSound);
+  const sound = useSelector(selectSound);
+  const playSound = (sound: Sound) => {
+    if (sound === "on") {
+      play();
+    }
+  };
 
   const handleChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
     const checkedValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
     dispatch(
       tasksThunks.changeTask({ todoId: props.todoId, taskId: props.taskId, domainModel: { status: checkedValue } }),
     );
+    playSound(sound);
   };
 
   const handleChangeTaskTitle = (newTaskTitle: string) => {
@@ -42,6 +55,7 @@ const Task = (props: TaskProps) => {
 
   const handleRemoveTask = () => {
     dispatch(tasksThunks.deleteTask({ todoId: props.todoId, taskId: props.taskId }));
+    playSound(sound);
   };
 
   return (
@@ -63,7 +77,7 @@ const Task = (props: TaskProps) => {
             marginLeft: "-9px",
           }}
         />
-        <span className={s.taskText}>
+        <span className={s.taskText} id={"taskText"}>
           {
             <EditableSpan
               content={props.title}
