@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import TodolistsList from "features/todolistsList/ui/todolistsList";
 import LoginForm from "features/loginForm/ui/loginForm";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { AppRootStateType, useAppDispatch } from "app/store";
 import { authThunks } from "features/loginForm/model/authReducer";
 import SnackBar from "common/components/snackBar";
@@ -29,7 +29,7 @@ function App() {
     <div className="app">
       {appStatus === "loading" && <LinearProgress sx={{ position: "fixed", left: 0, right: 0, zIndex: 1 }} />}
       <SnackBar />
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route
             path={"/login"}
@@ -41,7 +41,7 @@ function App() {
           />
           <Route path={"/"} element={<TodolistsList />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
 
       {/*<div*/}
       {/*  style={{*/}
