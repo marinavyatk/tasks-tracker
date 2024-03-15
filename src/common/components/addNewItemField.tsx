@@ -1,14 +1,12 @@
-import React, { ChangeEvent, useState, KeyboardEvent, useEffect, memo } from "react";
+import React, { ChangeEvent, KeyboardEvent, memo, useEffect, useState } from "react";
 import { FormControl, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { handleChangeDraggable } from "common/commonFunctions";
-import { Simulate } from "react-dom/test-utils";
 import { useSelector } from "react-redux";
-import { selectAppError, selectTasks, selectTodolists } from "common/selectors";
+import { selectSound, selectTasks } from "common/selectors";
 import useSound from "use-sound";
 // @ts-ignore
 import clickSound from "assets/clickSound.mp3";
-import { selectSound } from "common/selectors";
 import { Sound } from "common/types";
 
 type AddNewItemField = {
@@ -22,6 +20,12 @@ const AddNewItemField = memo((props: AddNewItemField) => {
   console.log("AddNewItemField");
 
   const [content, setContent] = useState("");
+  let [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  console.log(screenWidth);
+  window.addEventListener("resize", () => {
+    setScreenWidth(window.innerWidth);
+  });
+
   // const error = useSelector(selectAppError);
 
   // const todolists = useSelector(selectTodolists);
@@ -40,7 +44,6 @@ const AddNewItemField = memo((props: AddNewItemField) => {
   }, [tasks]);
 
   const addNewItem = () => {
-    // console.log(props.error);
     props.addItem(content);
     playSound(sound);
   };
@@ -53,14 +56,19 @@ const AddNewItemField = memo((props: AddNewItemField) => {
     }
   };
   return (
-    <div style={{ textAlign: "center", margin: "auto", width: "100%" }}>
+    <div
+      style={{
+        textAlign: "center",
+        margin: "auto",
+        width: screenWidth > 550 ? props.width : "240px",
+      }}
+    >
       {/*может быть вынести стили в отдельный файл?*/}
       <FormControl variant="outlined" sx={{ width: "100%", alignItems: "center" }}>
         <OutlinedInput
           placeholder={props.placeholder}
           sx={{
-            width: props.width,
-            minWidth: "300px",
+            width: "100%",
             paddingRight: "12px",
             "& .MuiOutlinedInput-input": {
               color: "#e7e7e7",
@@ -88,9 +96,6 @@ const AddNewItemField = memo((props: AddNewItemField) => {
                   backgroundColor: "#a486fc",
                   borderRadius: "0 5px 5px 0",
                   color: "rgb(33 33 33)",
-                  // background: "rgb(187,134,252)",
-                  // background: "linear-gradient(124deg, rgba(187,134,252,1) 28%, rgba(29,222,203,1) 97%)",
-
                   transition: "all 0.3s",
                   "&:hover": { backgroundColor: "#a486fc", color: "#e6e6e6" },
                 }}

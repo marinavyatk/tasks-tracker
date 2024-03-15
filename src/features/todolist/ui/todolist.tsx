@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button, Card, CardActions, CardContent, IconButton, Typography } from "@mui/material";
 import EditableSpan from "common/components/editableSpan";
 import s from "./todolist.module.css";
 import ProgressSlider from "common/components/progressSlider";
 import { useSelector } from "react-redux";
-import { selectAppError, selectTasks } from "common/selectors";
+import { selectAppError, selectSound, selectTasks } from "common/selectors";
 import Task from "features/tasks/ui/task";
 import { useAppDispatch } from "app/store";
 import { tasksThunks } from "features/tasks/model/tasksReducer";
@@ -16,7 +16,6 @@ import { Filter, RequestStatus, Sound } from "common/types";
 import useSound from "use-sound";
 // @ts-ignore
 import clickSound from "assets/clickSound.mp3";
-import { selectSound } from "common/selectors";
 
 type Todolist = {
   todoTitle: string;
@@ -141,7 +140,7 @@ const Todolist = (props: Todolist) => {
             </IconButton>
           </Typography>
           <AddNewItemField
-            width={"80%"}
+            width={"400px"}
             placeholder={"Add new task..."}
             addItem={handleAddTask}
             error={error}
