@@ -24,3 +24,18 @@
 .noTasksString{
     padding: 12px;
 }
+
+.todoContainer{
+    width: 500px;
+    min-width: 500px;
+}
+@media (max-width: 550px){
+    .todoContainer{
+        width: 300px;
+        min-width: 300px;
+    }
+    .buttonBlock button {
+        width: 75px;
+        font-size: 0.6rem;
+    }
+}

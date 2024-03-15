@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Checkbox, IconButton } from "@mui/material";
 import EditableSpan from "common/components/editableSpan";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -19,16 +19,18 @@ type TaskProps = {
   title: string;
   taskStatus: TaskStatuses;
   todoEntityStatus: RequestStatus;
-  onDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: () => void;
   onDragStart: (taskId: string) => void;
 };
 const Task = (props: TaskProps) => {
+  const [hovered, setHovered] = useState(false);
+
   const dispatch = useAppDispatch();
+  const sound = useSelector(selectSound);
   const todoStatus = props.todoEntityStatus;
   const disabled = todoStatus === "loading";
   const [play] = useSound(clickSound);
-  const sound = useSelector(selectSound);
+
   const playSound = (sound: Sound) => {
     if (sound === "on") {
       play();
@@ -57,6 +59,16 @@ const Task = (props: TaskProps) => {
     dispatch(tasksThunks.deleteTask({ todoId: props.todoId, taskId: props.taskId }));
     playSound(sound);
   };
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    const relatedTarget = event.relatedTarget as HTMLElement;
+    if (!target.contains(relatedTarget)) {
+      setHovered(false);
+    }
+  };
 
   return (
     <div
@@ -64,8 +76,13 @@ const Task = (props: TaskProps) => {
       draggable={true}
       id={props.taskId}
       onDragStart={() => props.onDragStart(props.taskId)}
-      onDragOver={props.onDragOver}
-      onDrop={props.onDrop}
+      onDrop={() => {
+        props.onDrop();
+        setHovered(false);
+      }}
+      onDragOver={handleDragOver}
+      onDragEnter={() => setHovered(true)}
+      onDragLeave={handleDragLeave}
     >
       <div className={s.boxWithTitle}>
         <Checkbox
@@ -77,7 +94,7 @@ const Task = (props: TaskProps) => {
             marginLeft: "-9px",
           }}
         />
-        <span className={s.taskText} id={"taskText"}>
+        <span className={`${s.taskText} ${hovered ? s.hovered : ""}`} id={"taskText"}>
           {
             <EditableSpan
               content={props.title}

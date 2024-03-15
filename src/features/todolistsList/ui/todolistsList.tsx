@@ -39,8 +39,7 @@ const TodolistsList = () => {
     }
   }, []);
 
-  const [sidebarHidden, setSidebarHidden] = useState(true);
-  const [dragStartTodoId, setDragStartTodoId] = useState("");
+  const [sidebarHidden, setSidebarHidden] = useState(false);
   const dispatch = useAppDispatch();
   const isAuthorized = useSelector(selectIsAuthorized);
   const todolists = useSelector(selectTodolists);
@@ -51,63 +50,21 @@ const TodolistsList = () => {
   const addTodolist = (newTodoTitle: string) => {
     dispatch(todolistThunks.createTodolist(newTodoTitle));
   };
-  if (!isAuthorized) {
-    return <Navigate to={"/login"} />;
-  }
-  const handleDragStart = (todoId: string) => {
-    setDragStartTodoId(todoId);
-  };
-  const handleChangeTodoOrder = (data: { todoId: string; putAfterItemId: string | null }) => {
-    console.log("change order!!!");
-    console.log("todoId:");
-    console.log(data.todoId);
-    console.log("putAfterItemId:");
-    console.log(data.putAfterItemId);
-    dispatch(todolistThunks.changeTodolistOrder(data));
-  };
 
   const todolistsForDisplay =
     activeTodo === "All"
-      ? todolists.map((tl, index) => {
-          return (
-            <Todolist
-              key={tl.id}
-              todoTitle={tl.title}
-              todoId={tl.id}
-              todoEntityStatus={tl.entityStatus}
-              onDragStart={handleDragStart}
-              onDrop={() =>
-                handleChangeTodoOrder({
-                  todoId: dragStartTodoId,
-                  putAfterItemId: todolists[index - 1]?.id || null,
-                })
-              }
-            />
-          );
+      ? todolists.map((tl) => {
+          return <Todolist key={tl.id} todoTitle={tl.title} todoId={tl.id} todoEntityStatus={tl.entityStatus} />;
         })
       : todolists
           .filter((tl) => tl.id === activeTodo)
-          .map((tl, index) => {
-            return (
-              <Todolist
-                key={tl.id}
-                todoTitle={tl.title}
-                todoId={tl.id}
-                todoEntityStatus={tl.entityStatus}
-                onDragStart={handleDragStart}
-                onDrop={() =>
-                  handleChangeTodoOrder({
-                    todoId: tl.id,
-                    putAfterItemId: todolists[index - 1]?.id || null,
-                  })
-                }
-              />
-            );
+          .map((tl) => {
+            return <Todolist key={tl.id} todoTitle={tl.title} todoId={tl.id} todoEntityStatus={tl.entityStatus} />;
           });
 
-  //   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-  //     event.preventDefault();
-  //   };
+  if (!isAuthorized) {
+    return <Navigate to={"/login"} />;
+  }
 
   return (
     <div className={s.mainContainer}>
@@ -117,7 +74,7 @@ const TodolistsList = () => {
         <Sidebar setSidebarHidden={setSidebarHidden} />
       )}
       <div className={s.todoBlock}>
-        <AddNewItemField width={"494px"} placeholder={"Let`s create a list..."} addItem={addTodolist} error={error} />
+        <AddNewItemField width={"500px"} placeholder={"Let`s create a list..."} addItem={addTodolist} error={error} />
         <div className={`${s.todos} ${listsDirection === "column" ? s.columnOrientation : s.rowOrientation}`}>
           {todolistsForDisplay}
         </div>

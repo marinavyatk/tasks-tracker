@@ -4,3 +4,11 @@
 /*    align-items: center;*/
 
 }
+
+
+@media (max-width: 1020px){
+    .buttonsSwitcher .direction{
+        display: none;
+    }
+
+}

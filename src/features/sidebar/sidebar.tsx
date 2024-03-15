@@ -103,9 +103,9 @@ const Sidebar = (props: Sidebar) => {
         </div>
         <p className={s.subTitle}>Customization</p>
         <div className={s.buttonsBlock}>
-          <div className={s.buttonsSwitcher}>
+          <div className={`${s.buttonsSwitcher} ${s.direction} direction`}>
             <div
-              className={`${s.buttonContainer} ${listsDirection === "column" ? s.activeMode : ""}`}
+              className={`${s.buttonContainer} ${listsDirection === "column" ? s.activeMode : ""} `}
               onClick={() => changeDirection("column")}
             >
               <ReorderIcon />

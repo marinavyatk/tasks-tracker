@@ -40,18 +40,24 @@ const SidebarSection = (props: SidebarSectionProps) => {
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
+  const handleEnter = () => {
+    if (props.sectionName !== "All") {
+      setHovered(true);
+    }
+  };
+
   return (
     <div
       className={`${s.sidebarSection} `}
       onClick={() => handleClick(props.todoId)}
-      draggable={true}
+      draggable={props.sectionName !== "All"}
       onDragStart={() => props.onDragStart && props.onDragStart(props.todoId)}
       onDrop={() => {
         props.onDrop && props.onDrop();
         setHovered(false);
       }}
       onDragOver={handleDragOver}
-      onDragEnter={() => setHovered(true)}
+      onDragEnter={handleEnter}
       onDragLeave={() => setHovered(false)}
     >
       <div className={`${s.inner} ${activeTodo === props.todoId ? s.activeTodo : ""} ${hovered ? s.hovered : ""}`}>

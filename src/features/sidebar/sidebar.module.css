@@ -15,7 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #a486fc;
+    /*color: #a486fc;*/
     color: #1ddecb;
     font-size: 20px;
     margin-bottom: 20px;
@@ -101,4 +101,49 @@
     margin-bottom: 10px;
     color: #a8a8a8;
     padding: 0 4px;
+}
+
+
+@media (max-width: 1060px){
+    .direction{
+        display: none;
+    }
+
+}
+
+@media (max-width: 815px){
+
+    .sidebar::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 300px;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(125 119 138 / 50%);
+        z-index: -1;
+    }
+    .sidebar{
+        background-color: rgb(5%, 7%, 9%, 1);
+        z-index: 10;
+    }
+
+}
+
+@media (max-width: 480px){
+    .sidebar{
+        position: absolute;
+        right: 0;
+        left: 0;
+        top:0;
+        bottom: 0;
+        width: 100%;
+        background-color: rgb(5%, 7%, 9%, 1);
+    }
+    .sidebar::before {
+        content: none;
+    }
+
 }

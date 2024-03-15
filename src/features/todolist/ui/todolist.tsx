@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button, Card, CardActions, CardContent, IconButton, Typography } from "@mui/material";
 import EditableSpan from "common/components/editableSpan";
@@ -22,8 +22,6 @@ type Todolist = {
   todoTitle: string;
   todoId: string;
   todoEntityStatus: RequestStatus;
-  onDragStart: (todoId: string) => void;
-  onDrop: (event: React.DragEvent<HTMLDivElement>) => void;
 };
 const Todolist = (props: Todolist) => {
   const error = useSelector(selectAppError);
@@ -61,11 +59,7 @@ const Todolist = (props: Todolist) => {
     playSound(sound);
   };
 
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  };
-
-  const handleChangeTaskOrder = (data: { todoId: string; taskId: string; putAfterItemId: string | null }) => {
+  const changeTaskOrder = (data: { todoId: string; taskId: string; putAfterItemId: string | null }) => {
     dispatch(tasksThunks.changeTaskOrder(data));
   };
 
@@ -84,40 +78,41 @@ const Todolist = (props: Todolist) => {
   const tasksForDisplay = !tasksForTodolist.length ? (
     <span className={s.noTasksString}>{`No ${currentFilter !== "all" ? currentFilter : ""} tasks`}</span>
   ) : (
-    tasksForTodolist.map((task, index) => (
-      <Task
-        key={task.id}
-        title={task.title}
-        todoId={props.todoId}
-        taskId={task.id}
-        taskStatus={task.status}
-        todoEntityStatus={props.todoEntityStatus}
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDrop={() =>
-          handleChangeTaskOrder({
+    tasksForTodolist.map((task, index) => {
+      const handleChangeTaskOrder = () => {
+        if (dragStartTaskId !== tasksForTodolist[index].id) {
+          changeTaskOrder({
             todoId: props.todoId,
             taskId: dragStartTaskId,
             putAfterItemId: tasksForTodolist[index - 1]?.id || null,
-          })
+          });
         }
-      />
-    ))
+      };
+      return (
+        <Task
+          key={task.id}
+          title={task.title}
+          todoId={props.todoId}
+          taskId={task.id}
+          taskStatus={task.status}
+          todoEntityStatus={props.todoEntityStatus}
+          onDragStart={handleDragStart}
+          onDrop={handleChangeTaskOrder}
+        />
+      );
+    })
   );
 
   return (
-    <div>
+    <div className={s.todoContainer}>
       <Card
         sx={{
           backgroundColor: "rgba(39, 41, 45, 0.6);",
-          width: "500px",
+          // width: "500px",
+          width: "100%",
           minWidth: "300px",
         }}
         raised={true}
-        draggable={true}
-        onDragStart={() => props.onDragStart(props.todoId)}
-        onDragOver={handleDragOver}
-        onDrop={props.onDrop}
         id={props.todoId}
       >
         <CardContent sx={{ padding: "20px 0" }}>

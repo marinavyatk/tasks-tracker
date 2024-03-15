@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     border-bottom: 1px #a486fc dashed;
+    border-bottom: 1px rgba(164, 134, 252, 0.8) dashed;
     width: 80%;
     justify-content: space-between;
 
@@ -31,4 +32,7 @@
 }
 button:disabled{
     opacity: 50%;
+}
+.hovered{
+    border-top: 3px solid #a486fc;
 }
