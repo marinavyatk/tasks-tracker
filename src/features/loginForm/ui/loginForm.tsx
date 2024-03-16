@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Formik } from "formik";
 import { DataForLogin } from "common/types";
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, TextField } from "@mui/material";
-import { store, useAppDispatch } from "app/store";
+import { useAppDispatch } from "app/store";
 import { authThunks } from "features/loginForm/model/authReducer";
 import s from "./loginForm.module.css";
 import { useSelector } from "react-redux";
@@ -31,9 +31,8 @@ const LoginForm = () => {
   return (
     <div className={s.loginContainer}>
       <div className={s.loginForm}>
-        <section className={s.formInputsBlock}>
+        <section className={s.section}>
           <h1>Sign in</h1>
-
           <Formik
             initialValues={{ email: "", password: "", rememberMe: true }}
             validate={validateFunc}
@@ -92,9 +91,8 @@ const LoginForm = () => {
             }}
           </Formik>
         </section>
-        <div className={s.divider}></div>
-
-        <section className={s.formDescription}>
+        <section className={`${s.formDescription} ${s.section}`}>
+          <div className={s.divider}></div>
           <p>
             To log in get registered{" "}
             <a href={"https://social-network.samuraijs.com/"} target={"_blank"} rel="noreferrer">
