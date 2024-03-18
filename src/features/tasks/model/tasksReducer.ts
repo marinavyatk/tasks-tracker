@@ -56,7 +56,6 @@ const fetchTasks = createAppAsyncThunk<{ todoId: string; tasks: Task[] }, string
     }
   },
 );
-
 const createTask = createAppAsyncThunk<{ task: Task; todoId: string }, { todoId: string; taskTitle: string }>(
   "tasks/createTask",
   async (arg: { todoId: string; taskTitle: string }, thunkAPI) => {
@@ -71,7 +70,6 @@ const createTask = createAppAsyncThunk<{ task: Task; todoId: string }, { todoId:
     }
   },
 );
-
 const deleteTask = createAppAsyncThunk(
   "tasks/deleteTask",
   async (arg: { todoId: string; taskId: string }, thunkAPI) => {
@@ -93,7 +91,6 @@ const changeTask = createAppAsyncThunk<UpdateTaskArg, UpdateTaskArg>("tasks/chan
   if (!task) {
     return rejectWithValue(null);
   }
-
   const apiModel: UpdateTaskModel = {
     deadline: task.deadline,
     description: task.description,
@@ -103,7 +100,6 @@ const changeTask = createAppAsyncThunk<UpdateTaskArg, UpdateTaskArg>("tasks/chan
     status: task.status,
     ...arg.domainModel,
   };
-
   const res = await tasksApi.changeTask(arg.todoId, arg.taskId, apiModel);
   if (res.data.resultCode === ResultCode.Success) {
     return arg;
@@ -111,7 +107,6 @@ const changeTask = createAppAsyncThunk<UpdateTaskArg, UpdateTaskArg>("tasks/chan
     return rejectWithValue(res.data.messages?.[0] ?? null);
   }
 });
-
 const changeTaskOrder = createAppAsyncThunk<
   { todoId: string; taskId: string; putAfterItemId: string | null },
   {

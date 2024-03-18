@@ -1,11 +1,6 @@
 import { TaskPriorities, TaskStatuses } from "common/enums";
 
 //app
-export type ActiveTodo = {
-  todoId: string;
-  todoTitle: string;
-};
-
 export type DataForAuthorization = {
   email: string;
   password: string;
@@ -13,6 +8,8 @@ export type DataForAuthorization = {
   captcha?: boolean;
 };
 export type RequestStatus = "idle" | "loading" | "succeeded" | "failed";
+export type ListsDirection = "row" | "row-reverse" | "column" | "column-reverse";
+export type Sound = "on" | "off";
 
 //todos
 export type TodoListItem = {
@@ -85,6 +82,3 @@ export type DataForLogin = {
   rememberMe: boolean;
   captcha?: boolean;
 };
-
-export type ListsDirection = "row" | "row-reverse" | "column" | "column-reverse";
-export type Sound = "on" | "off";

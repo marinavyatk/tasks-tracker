@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /*transition: 0.5s;*/
 }
 
 * p, span {
@@ -14,23 +13,15 @@ body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /*background-color: rgb(33 33 33);*/
     background-color: #181b21;
     color: #e7e7e7;
     text-align: center;
-
     background-attachment: fixed; /* Фиксирует фон, чтобы он оставался на месте при прокрутке страницы */
     background: radial-gradient(circle 650px at top 5px right 0px, #1b5e60 10%, transparent),
     radial-gradient(circle 300px at bottom 300px left 20px, #1b5e60 30%, transparent),
     radial-gradient(circle 70px at 50% 15%, #273d41, rgba(27, 94, 96, 40%), rgba(27, 94, 96, 25%), rgba(48, 76, 80, 15%), rgba(48, 76, 80, 6%), transparent),
-    /*radial-gradient(circle 90px at  70% 65%, #273d41, rgba(27, 94, 96, 40%), rgba(27, 94, 96, 25%),rgba(48, 76, 80, 15%), rgba(48, 76, 80, 6%),  transparent),*/
     radial-gradient(ellipse 450px 100px at 50% 100%, #113436 30%, #181b21);
     background-attachment: fixed;
-}
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }
 
 ::-webkit-scrollbar {
@@ -38,11 +29,7 @@ code {
 }
 
 .loginPage {
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
     vertical-align: center;
-    /*border: 2px solid red;*/
     height: 500px;
 }
 

@@ -1,4 +1,4 @@
-import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, isRejected } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/createAppAsyncThunk";
 import AuthApi from "features/loginForm/api/authApi";
 import { ResultCode } from "common/enums";
@@ -11,30 +11,17 @@ const initialState = {
 const slice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    changeUserEmail(state, action: PayloadAction<string>) {
-      state.user = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(me.fulfilled, (state, action) => {
-        state.isAuthorized = action.payload.isAuthorized;
-        state.user = action.payload.userData.login;
+        state.user = action.payload.userData.email;
       })
-      .addCase(login.fulfilled, (state, action) => {
-        state.isAuthorized = action.payload.isAuthorized;
-      })
-      .addCase(logout.fulfilled, (state, action) => {
-        state.isAuthorized = action.payload.isAuthorized;
+      .addCase(logout.fulfilled, (state) => {
         state.user = "";
       })
-      .addMatcher(isPending(authThunks.me), (state) => {
-        state.isAuthorized = true;
-      })
-      .addMatcher(isFulfilled(authThunks.me), (state, action) => {
-        state.isAuthorized = true;
-        state.user = action.payload.userData.email;
+      .addMatcher(isAnyOf(me.fulfilled, login.fulfilled, logout.fulfilled), (state, action) => {
+        state.isAuthorized = action.payload.isAuthorized;
       })
       .addMatcher(isRejected(authThunks.me), (state) => {
         state.isAuthorized = false;
@@ -53,7 +40,6 @@ const me = createAppAsyncThunk<{ isAuthorized: boolean; userData: UserData }, un
     }
   },
 );
-
 const login = createAppAsyncThunk<{ isAuthorized: boolean }, DataForLogin>("auth/login", async (arg, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
   const res = await AuthApi.logIn(arg);
@@ -64,10 +50,8 @@ const login = createAppAsyncThunk<{ isAuthorized: boolean }, DataForLogin>("auth
     return rejectWithValue(res.data.messages?.[0] ?? null);
   }
 });
-
 const logout = createAppAsyncThunk<{ isAuthorized: boolean }, undefined>("auth/logout", async (_, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
-
   const res = await AuthApi.logOut();
   if (res.data.resultCode === ResultCode.Success) {
     return { isAuthorized: false };
@@ -77,5 +61,4 @@ const logout = createAppAsyncThunk<{ isAuthorized: boolean }, undefined>("auth/l
 });
 
 export const authReducer = slice.reducer;
-export const authActions = slice.actions;
 export const authThunks = { me, login, logout };

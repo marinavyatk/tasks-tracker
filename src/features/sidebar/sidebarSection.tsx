@@ -33,7 +33,7 @@ const SidebarSection = (props: SidebarSectionProps) => {
       play();
     }
   };
-  const handleClick = (todoId: string) => {
+  const setActiveTodo = (todoId: string) => {
     dispatch(appActions.setActiveTodo({ todoId }));
     playSound(sound);
   };
@@ -49,7 +49,7 @@ const SidebarSection = (props: SidebarSectionProps) => {
   return (
     <div
       className={`${s.sidebarSection} `}
-      onClick={() => handleClick(props.todoId)}
+      onClick={() => setActiveTodo(props.todoId)}
       draggable={props.sectionName !== "All"}
       onDragStart={() => props.onDragStart && props.onDragStart(props.todoId)}
       onDrop={() => {

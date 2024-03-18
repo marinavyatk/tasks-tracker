@@ -9,14 +9,13 @@ const cleanPercentage = (percentage: number) => {
   const isTooHigh = percentage > 100;
   return isNegativeOrNaN ? 0 : isTooHigh ? 100 : +percentage;
 };
-type Circle = {
+type CircleProps = {
   color: string;
   percentage: number;
 };
-const Circle = (props: Circle) => {
+const Circle = (props: CircleProps) => {
   const { color, percentage } = props;
-  const strokePct = ((100 - percentage) * circ) / 100; // where stroke will start, e.g. from 15% to 100%.
-  // const strokePct = (percentage * circ) / 100;
+  const strokePct = ((100 - percentage) * circ) / 100; // where stroke will start
   const dashArray = circ;
   const dashOffset = circ - (percentage * circ) / 100; // изменено направление анимации
   return (
@@ -28,18 +27,16 @@ const Circle = (props: Circle) => {
       fill="transparent"
       stroke={strokePct !== circ ? color : ""} // remove colour as 0% sets full circumference
       strokeWidth={strokeWidth}
-      // strokeDasharray={circ}
-      // strokeDashoffset={percentage ? strokePct : 0}
       strokeLinecap="round"
       strokeDasharray={dashArray}
       strokeDashoffset={dashOffset}
     ></circle>
   );
 };
-type Text = {
+type TextProps = {
   percentage: number;
 };
-const Text = (props: Text) => {
+const Text = (props: TextProps) => {
   const { percentage } = props;
   return (
     <text
@@ -55,11 +52,11 @@ const Text = (props: Text) => {
     </text>
   );
 };
-type ProgressCircle = {
+type ProgressCircleProps = {
   color: string;
   percentage: number;
 };
-const ProgressCircle = (props: ProgressCircle) => {
+const ProgressCircle = (props: ProgressCircleProps) => {
   const { color, percentage } = props;
   const pct = cleanPercentage(percentage);
   return (

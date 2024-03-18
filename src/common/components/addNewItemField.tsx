@@ -1,7 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent, memo, useEffect, useState } from "react";
 import { FormControl, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { handleChangeDraggable } from "common/commonFunctions";
 import { useSelector } from "react-redux";
 import { selectSound, selectTasks } from "common/selectors";
 import useSound from "use-sound";
@@ -9,40 +8,31 @@ import useSound from "use-sound";
 import clickSound from "assets/clickSound.mp3";
 import { Sound } from "common/types";
 
-type AddNewItemField = {
+type AddNewItemFieldProps = {
   todoId?: string;
   width: string;
   placeholder: string;
   addItem: (newItemTitle: string) => void;
   error: string | null;
 };
-const AddNewItemField = memo((props: AddNewItemField) => {
+const AddNewItemField = memo((props: AddNewItemFieldProps) => {
   console.log("AddNewItemField");
-
   const [content, setContent] = useState("");
   let [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  console.log(screenWidth);
-  window.addEventListener("resize", () => {
-    setScreenWidth(window.innerWidth);
-  });
-
-  // const error = useSelector(selectAppError);
-
-  // const todolists = useSelector(selectTodolists);
   const tasks = useSelector(selectTasks);
-  const [play] = useSound(clickSound);
   const sound = useSelector(selectSound);
+  useEffect(() => {
+    setContent("");
+  }, [tasks]);
+  const [play] = useSound(clickSound);
   const playSound = (sound: Sound) => {
     if (sound === "on") {
       play();
     }
   };
-  useEffect(() => {
-    // if (!error) {
-    setContent("");
-    // }
-  }, [tasks]);
-
+  window.addEventListener("resize", () => {
+    setScreenWidth(window.innerWidth);
+  });
   const addNewItem = () => {
     props.addItem(content);
     playSound(sound);
@@ -55,6 +45,7 @@ const AddNewItemField = memo((props: AddNewItemField) => {
       addNewItem();
     }
   };
+
   return (
     <div
       style={{
@@ -63,7 +54,6 @@ const AddNewItemField = memo((props: AddNewItemField) => {
         width: screenWidth > 550 ? props.width : "240px",
       }}
     >
-      {/*может быть вынести стили в отдельный файл?*/}
       <FormControl variant="outlined" sx={{ width: "100%", alignItems: "center" }}>
         <OutlinedInput
           placeholder={props.placeholder}
@@ -84,8 +74,6 @@ const AddNewItemField = memo((props: AddNewItemField) => {
           onChange={handleInputChange}
           onKeyDown={handleEnterInputChange}
           value={content}
-          onFocus={() => props.todoId && handleChangeDraggable(props.todoId, undefined, "false")}
-          onBlur={() => props.todoId && handleChangeDraggable(props.todoId, undefined, "true")}
           endAdornment={
             <InputAdornment position="end">
               <IconButton

@@ -6,27 +6,26 @@ import { appActions } from "app/appReducer";
 import { useAppDispatch } from "app/store";
 
 const SnackBar = () => {
-  const error = useSelector(selectAppError);
-  const dispatch = useAppDispatch();
-
   const [open, setOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const error = useSelector(selectAppError);
   useEffect(() => {
     if (error) {
       setOpen(true);
-      // Внесите изменения в ваш код обработки ошибки здесь, если необходимо.
     }
   }, [error]);
+
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
     setTimeout(() => {
-      console.log("timeout");
       dispatch(appActions.setAppError({ error: null }));
     }, 1000);
   };
   if (error === "notShow") return <></>;
+
   return (
     <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
       <Alert

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEventHandler, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { handleChangeDraggable } from "common/commonFunctions";
 import { appActions } from "app/appReducer";
@@ -15,24 +15,22 @@ type EditableSpanProps = {
 const EditableSpan = (props: EditableSpanProps) => {
   const [editMode, setEditMode] = useState(false);
   const [content, setContent] = useState("");
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setContent(props.content);
   }, [props.content]);
-  const dispatch = useAppDispatch();
   const activateEditMode = () => {
     setEditMode(true);
+    handleChangeDraggable(props.taskId, "false");
   };
   const deactivateEditMode = () => {
-    console.log("deactivateEditMode");
-    handleChangeDraggable(props.todoId, props.taskId, "true");
-    // setEditMode(false);
+    handleChangeDraggable(props.taskId, "true");
     if (!content.trim().length && props.removeTask) {
       props.removeTask();
     } else if (!content.trim().length) {
       setContent(props.content);
       setEditMode(false);
     } else if (content.length > 100) {
-      // setContent(props.content);
       dispatch(appActions.setAppError({ error: "Text length shouldn`t be more that 100 characters" }));
     } else if (content !== props.content) {
       props.changeTitle(content);
@@ -50,9 +48,6 @@ const EditableSpan = (props: EditableSpanProps) => {
       deactivateEditMode();
     }
   };
-  const onFocusChangeHandler = () => {
-    handleChangeDraggable(props.todoId, props.taskId, "false");
-  };
 
   return (
     <>
@@ -60,7 +55,6 @@ const EditableSpan = (props: EditableSpanProps) => {
         <TextField
           autoFocus
           value={content}
-          onFocus={onFocusChangeHandler}
           onBlur={deactivateEditMode}
           onKeyDown={deactivateEditModeOnEnter}
           variant="filled"
