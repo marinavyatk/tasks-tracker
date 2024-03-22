@@ -28,6 +28,7 @@ const LoginForm = () => {
   if (isAuthorized) {
     return <Navigate to={"/"} />;
   }
+
   return (
     <div className={s.loginContainer}>
       <div className={s.loginForm}>

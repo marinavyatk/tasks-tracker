@@ -1,18 +1,21 @@
-.loaderContainer{
+.loaderContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: -100px 0 0 0;
 }
+
 .ip__track {
-    stroke: hsl(223,90%,90%);
+    stroke: hsl(223, 90%, 90%);
     transition: stroke 0.5s;
 }
+
 .ip__worm1,
 .ip__worm2 {
     animation: worm1 2s linear infinite;
 }
+
 .ip__worm2 {
     animation-name: worm2;
 }
@@ -20,11 +23,12 @@
 /* Dark theme */
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg: hsl(223,90%,5%);
-        --fg: hsl(223,90%,95%);
+        --bg: hsl(223, 90%, 5%);
+        --fg: hsl(223, 90%, 95%);
     }
+
     .ip__track {
-        stroke: hsl(223,90%,15%);
+        stroke: hsl(223, 90%, 15%);
     }
 }
 
@@ -45,6 +49,7 @@
         stroke-dashoffset: 0;
     }
 }
+
 @keyframes worm2 {
     from {
         stroke-dashoffset: 358;

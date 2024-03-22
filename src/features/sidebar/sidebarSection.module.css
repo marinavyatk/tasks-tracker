@@ -1,57 +1,46 @@
-.sidebarSection {
-    margin: 5px 0;
-    /*padding: 0 10px;*/
-}
-.sidebarSection:first-child{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.item{
+.progressCircle {
     display: flex;
     align-items: center;
     gap: 5px
 }
-.inner{
-    border: 1px solid rgba(49, 49, 49, 0.71);
-    /*border: 1px solid #232323;;*/
 
+.sidebarSection {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 50px;
-    text-align: start;
     gap: 10px;
-    border-radius: 3px;
-    padding: 0 5px 0 8px;
-    border-left: 3px solid #a486fc;
     width: 100%;
+    min-height: 50px;
+    border: 1px solid rgba(49, 49, 49, 0.71);
+    border-left: 3px solid #a486fc;
+    border-radius: 3px;
+    margin: 5px 0;
+    padding: 0 5px 0 8px;
+    text-align: start;
     transition: 0.5s;
 }
-.inner:hover{
-    /*background-color: rgba(49, 49, 49, 0.71)*/
+
+.sidebarSection:hover {
     background-color: rgb(73%, 53%, 99%, 0.04);
     border: 1px solid #9576ba;
     border-left: 3px solid #a486fc;
 }
-.all{
-    /*width: 100%;*/
-    /*box-sizing: border-box;*/
-    /*display: block;*/
-    /*flex-grow: 1;*/
+
+.all {
     text-align: center;
     margin: auto;
-
 }
-.activeTodo{
+
+.activeTodo {
     box-shadow: 0 0 4px #a486fc;
 }
-.activeTodo:hover{
+
+.activeTodo:hover {
+    background-color: rgb(73%, 53%, 99%, 0.04);
     border: 1px solid #a486fc;
     border-left: 3px solid #a486fc;
-    background-color: rgb(73%, 53%, 99%, 0.04);
 }
+
 .hovered {
     border-top: 2px solid #a486fc;
     transition: none;

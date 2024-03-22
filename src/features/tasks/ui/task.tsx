@@ -24,19 +24,15 @@ type TaskProps = {
 };
 const Task = (props: TaskProps) => {
   const [hovered, setHovered] = useState(false);
-
   const dispatch = useAppDispatch();
   const sound = useSelector(selectSound);
-  const todoStatus = props.todoEntityStatus;
-  const disabled = todoStatus === "loading";
   const [play] = useSound(clickSound);
-
   const playSound = (sound: Sound) => {
     if (sound === "on") {
       play();
     }
   };
-
+  const disabled = props.todoEntityStatus === "loading";
   const handleChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
     const checkedValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
     dispatch(
@@ -69,32 +65,43 @@ const Task = (props: TaskProps) => {
       setHovered(false);
     }
   };
+  const handleDragStart = () => {
+    props.onDragStart(props.taskId);
+  };
+  const handleDrop = () => {
+    props.onDrop();
+    setHovered(false);
+  };
+  const handleDragEnter = () => {
+    setHovered(true);
+  };
 
   return (
     <div
       className={s.task}
       draggable={true}
       id={props.taskId}
-      onDragStart={() => props.onDragStart(props.taskId)}
-      onDrop={() => {
-        props.onDrop();
-        setHovered(false);
-      }}
+      onDragStart={handleDragStart}
+      onDrop={handleDrop}
       onDragOver={handleDragOver}
-      onDragEnter={() => setHovered(true)}
+      onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
     >
       <div className={s.boxWithTitle}>
         <Checkbox
           checked={props.taskStatus === TaskStatuses.Completed}
-          disabled={disabled}
           onChange={handleChangeTaskStatus}
           sx={{
             color: "#a486fc",
             marginLeft: "-9px",
+            "& .Mui-disabled": {
+              color: "#a486fc",
+            },
           }}
+          disabled={disabled}
+          className={s.checkbox}
         />
-        <span className={`${s.taskText} ${hovered ? s.hovered : ""}`} id={"taskText"}>
+        <span className={`${s.taskText} ${hovered ? s.hovered : ""}`}>
           {
             <EditableSpan
               content={props.title}
@@ -114,7 +121,7 @@ const Task = (props: TaskProps) => {
         }}
         disabled={disabled}
       >
-        <CancelIcon color={"primary"} className={s.delete} />
+        <CancelIcon color={"primary"} />
       </IconButton>
     </div>
   );

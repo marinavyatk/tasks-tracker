@@ -3,7 +3,7 @@ import { Task, TasksState, UpdateTaskArg, UpdateTaskModel } from "common/types";
 import { createAppAsyncThunk } from "common/createAppAsyncThunk";
 import { tasksApi } from "features/tasks/api/tasksApi";
 import { ResultCode } from "common/enums";
-import { todolistThunks } from "features/todolist/model/todolistReducer";
+import { todolistActions, todolistThunks } from "features/todolist/model/todolistReducer";
 
 const initialState = {} as TasksState;
 const slice = createSlice({
@@ -59,10 +59,13 @@ const fetchTasks = createAppAsyncThunk<{ todoId: string; tasks: Task[] }, string
 const createTask = createAppAsyncThunk<{ task: Task; todoId: string }, { todoId: string; taskTitle: string }>(
   "tasks/createTask",
   async (arg: { todoId: string; taskTitle: string }, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-
-    const res = await tasksApi.createTask(arg.todoId, arg.taskTitle);
+    const { dispatch, rejectWithValue } = thunkAPI;
+    dispatch(todolistActions.changeEntityStatus({ todoId: arg.todoId, entityStatus: "loading" }));
+    const res = await tasksApi.createTask(arg.todoId, arg.taskTitle).finally(() => {
+      dispatch(todolistActions.changeEntityStatus({ todoId: arg.todoId, entityStatus: "idle" }));
+    });
     if (res.data.resultCode === ResultCode.Success) {
+      dispatch(todolistActions.changeEntityStatus({ todoId: arg.todoId, entityStatus: "succeeded" }));
       const task = res.data.data.item;
       return { todoId: arg.todoId, task };
     } else {
@@ -73,10 +76,13 @@ const createTask = createAppAsyncThunk<{ task: Task; todoId: string }, { todoId:
 const deleteTask = createAppAsyncThunk(
   "tasks/deleteTask",
   async (arg: { todoId: string; taskId: string }, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-
-    const res = await tasksApi.deleteTask(arg.todoId, arg.taskId);
+    const { dispatch, rejectWithValue } = thunkAPI;
+    dispatch(todolistActions.changeEntityStatus({ todoId: arg.todoId, entityStatus: "loading" }));
+    const res = await tasksApi.deleteTask(arg.todoId, arg.taskId).finally(() => {
+      dispatch(todolistActions.changeEntityStatus({ todoId: arg.todoId, entityStatus: "idle" }));
+    });
     if (res.data.resultCode === ResultCode.Success) {
+      dispatch(todolistActions.changeEntityStatus({ todoId: arg.todoId, entityStatus: "succeeded" }));
       return arg;
     } else {
       return rejectWithValue(res.data.messages?.[0] ?? null);

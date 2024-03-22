@@ -1,6 +1,5 @@
 import { instance } from "common/api";
 import { CommonResponse, DataForLogin, UserData } from "common/types";
-import { AxiosError } from "axios";
 
 const AuthApi = {
   me() {

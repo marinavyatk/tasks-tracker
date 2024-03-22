@@ -17,20 +17,20 @@ import useSound from "use-sound";
 // @ts-ignore
 import clickSound from "assets/clickSound.mp3";
 
-type Todolist = {
+type TodolistProps = {
   todoTitle: string;
   todoId: string;
   todoEntityStatus: RequestStatus;
 };
-const Todolist = (props: Todolist) => {
-  const error = useSelector(selectAppError);
-  const disabled = props.todoEntityStatus === "loading";
+const Todolist = (props: TodolistProps) => {
   const [currentFilter, setCurrentFilter] = useState("all" as Filter);
   const [dragStartTaskId, setDragStartTaskId] = useState("");
   const dispatch = useAppDispatch();
+  const error = useSelector(selectAppError);
   const tasks = useSelector(selectTasks);
-  const [play] = useSound(clickSound);
   const sound = useSelector(selectSound);
+  const [play] = useSound(clickSound);
+  const disabled = props.todoEntityStatus === "loading";
   const playSound = (sound: Sound) => {
     if (sound === "on") {
       play();
@@ -52,7 +52,6 @@ const Todolist = (props: Todolist) => {
   };
   const handleChangeFilter = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const filterValue = e.currentTarget.value as Filter;
-    console.log(filterValue);
     todolistActions.changeFilter({ todoId: props.todoId, filter: filterValue });
     setCurrentFilter(filterValue);
     playSound(sound);
@@ -107,7 +106,6 @@ const Todolist = (props: Todolist) => {
       <Card
         sx={{
           backgroundColor: "rgba(39, 41, 45, 0.6);",
-          // width: "500px",
           width: "100%",
           minWidth: "300px",
         }}
@@ -126,7 +124,8 @@ const Todolist = (props: Todolist) => {
               justifyContent: "center",
               fontSize: "30px",
               lineHeight: "normal",
-              height: "35.5px",
+              wordBreak: "break-word",
+              letterSpacing: "normal",
             }}
           >
             <EditableSpan
@@ -145,6 +144,7 @@ const Todolist = (props: Todolist) => {
             addItem={handleAddTask}
             error={error}
             todoId={props.todoId}
+            todoEntityStatus={props.todoEntityStatus}
           />
         </CardContent>
         <div className={s.tasksBlock}>{tasksForDisplay}</div>

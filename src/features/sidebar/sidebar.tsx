@@ -20,11 +20,12 @@ import clickSound from "assets/clickSound.mp3";
 import { useState } from "react";
 import { todolistThunks } from "features/todolist/model/todolistReducer";
 
-type Sidebar = {
+type SidebarProps = {
   setSidebarHidden: (hidden: boolean) => void;
 };
 
-const Sidebar = (props: Sidebar) => {
+const Sidebar = (props: SidebarProps) => {
+  const [dragStartTodoId, setDragStartTodoId] = useState("");
   const dispatch = useAppDispatch();
   const [play] = useSound(clickSound);
   //useSelector block
@@ -33,17 +34,11 @@ const Sidebar = (props: Sidebar) => {
   const user = useSelector(selectUserEmail);
   const listsDirection = useSelector(selectListsDirection);
   const sound = useSelector(selectSound);
-
-  const [dragStartTodoId, setDragStartTodoId] = useState("");
-
   const playSound = (sound: Sound) => {
     if (sound === "on") {
       play();
     }
   };
-  // useEffect(() => {
-  //   dispatch(authActions.changeUserEmail(user));
-  // }, [user]);
   const logOut = () => {
     dispatch(authThunks.logout());
   };
@@ -51,10 +46,6 @@ const Sidebar = (props: Sidebar) => {
     setDragStartTodoId(todoId);
   };
   const changeTodoOrder = (data: { todoId: string; putAfterItemId: string | null }) => {
-    console.log("todoId:");
-    console.log(data.todoId);
-    console.log("putAfterItemId:");
-    console.log(data.putAfterItemId);
     dispatch(todolistThunks.changeTodolistOrder(data));
   };
 
@@ -71,6 +62,7 @@ const Sidebar = (props: Sidebar) => {
         });
       }
     };
+
     return (
       <SidebarSection
         sectionName={tl.title}
@@ -103,7 +95,7 @@ const Sidebar = (props: Sidebar) => {
         </div>
         <p className={s.subTitle}>Customization</p>
         <div className={s.buttonsBlock}>
-          <div className={`${s.buttonsSwitcher} ${s.direction} direction`}>
+          <div className={`${s.buttonsSwitcher} ${s.direction}`}>
             <div
               className={`${s.buttonContainer} ${listsDirection === "column" ? s.activeMode : ""} `}
               onClick={() => changeDirection("column")}

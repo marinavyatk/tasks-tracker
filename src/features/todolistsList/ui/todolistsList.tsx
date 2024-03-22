@@ -7,17 +7,13 @@ import { useSelector } from "react-redux";
 import {
   selectActiveTodo,
   selectAppError,
-  selectAppStatus,
   selectIsAuthorized,
   selectListsDirection,
   selectTodolists,
 } from "common/selectors";
 import s from "./todolistsList.module.css";
 import Sidebar from "features/sidebar/sidebar";
-import { Grid } from "@mui/material";
 import { Navigate } from "react-router-dom";
-import { tasksThunks } from "features/tasks/model/tasksReducer";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { appActions } from "app/appReducer";
 import { ListsDirection, Sound } from "common/types";
 import { HiddenMenuTrigger } from "common/components/hiddenMenuTrigger/hiddenMenuTrigger";

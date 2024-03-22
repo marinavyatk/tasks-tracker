@@ -22,12 +22,11 @@ type SidebarSectionProps = {
 };
 
 const SidebarSection = (props: SidebarSectionProps) => {
+  const [hovered, setHovered] = useState(false);
   const dispatch = useAppDispatch();
   const activeTodo = useSelector(selectActiveTodo);
-  const [hovered, setHovered] = useState(false);
-
-  const [play] = useSound(clickSound);
   const sound = useSelector(selectSound);
+  const [play] = useSound(clickSound);
   const playSound = (sound: Sound) => {
     if (sound === "on") {
       play();
@@ -45,49 +44,42 @@ const SidebarSection = (props: SidebarSectionProps) => {
       setHovered(true);
     }
   };
-
+  const handleDragStart = () => {
+    props.onDragStart && props.onDragStart(props.todoId);
+  };
+  const handleDrop = () => {
+    props.onDrop && props.onDrop();
+    setHovered(false);
+  };
   return (
     <div
-      className={`${s.sidebarSection} `}
+      className={`${s.sidebarSection} ${activeTodo === props.todoId ? s.activeTodo : ""} ${hovered ? s.hovered : ""}`}
       onClick={() => setActiveTodo(props.todoId)}
       draggable={props.sectionName !== "All"}
-      onDragStart={() => props.onDragStart && props.onDragStart(props.todoId)}
-      onDrop={() => {
-        props.onDrop && props.onDrop();
-        setHovered(false);
-      }}
+      onDragStart={handleDragStart}
+      onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragEnter={handleEnter}
       onDragLeave={() => setHovered(false)}
     >
-      <div className={`${s.inner} ${activeTodo === props.todoId ? s.activeTodo : ""} ${hovered ? s.hovered : ""}`}>
-        {props.sectionName !== "All" ? (
-          // <div className={s.item}>
+      {props.sectionName !== "All" ? (
+        <p>{props.sectionName}</p>
+      ) : (
+        <Badge
+          badgeContent={<span style={{ fontWeight: "bold" }}>{props.badgeContent}</span>}
+          color={"secondary"}
+          showZero
+          className={s.all}
+        >
           <p>{props.sectionName}</p>
-        ) : (
-          // </div>
-
-          <Badge
-            badgeContent={<span style={{ fontWeight: "bold" }}>{props.badgeContent}</span>}
-            color={"secondary"}
-            showZero
-            className={s.all}
-            // sx={{ display: "block", width: "100%" }}
-          >
-            <p>{props.sectionName}</p>
-            &ensp;
-          </Badge>
-        )}
-        {props.sectionName !== "All" && (
-          <div className={s.item}>
-            <ProgressCircle
-              color={"#1ddecb"}
-              // color={"#a96666"}
-              percentage={props.progressValue ? props.progressValue : 0}
-            />
-          </div>
-        )}
-      </div>
+          &ensp;
+        </Badge>
+      )}
+      {props.sectionName !== "All" && (
+        <div className={s.progressCircle}>
+          <ProgressCircle color={"#1ddecb"} percentage={props.progressValue ? props.progressValue : 0} />
+        </div>
+      )}
     </div>
   );
 };

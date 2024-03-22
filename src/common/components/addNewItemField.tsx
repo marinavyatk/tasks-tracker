@@ -6,7 +6,7 @@ import { selectSound, selectTasks } from "common/selectors";
 import useSound from "use-sound";
 // @ts-ignore
 import clickSound from "assets/clickSound.mp3";
-import { Sound } from "common/types";
+import { RequestStatus, Sound } from "common/types";
 
 type AddNewItemFieldProps = {
   todoId?: string;
@@ -14,6 +14,7 @@ type AddNewItemFieldProps = {
   placeholder: string;
   addItem: (newItemTitle: string) => void;
   error: string | null;
+  todoEntityStatus?: RequestStatus;
 };
 const AddNewItemField = memo((props: AddNewItemFieldProps) => {
   console.log("AddNewItemField");
@@ -25,6 +26,7 @@ const AddNewItemField = memo((props: AddNewItemFieldProps) => {
     setContent("");
   }, [tasks]);
   const [play] = useSound(clickSound);
+  const disabled = props.todoEntityStatus === "loading";
   const playSound = (sound: Sound) => {
     if (sound === "on") {
       play();
@@ -87,6 +89,7 @@ const AddNewItemField = memo((props: AddNewItemFieldProps) => {
                   transition: "all 0.3s",
                   "&:hover": { backgroundColor: "#a486fc", color: "#e6e6e6" },
                 }}
+                disabled={disabled}
               >
                 <AddIcon />
               </IconButton>
