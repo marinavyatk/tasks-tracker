@@ -2,10 +2,10 @@ import React, { ChangeEvent, useState } from "react";
 import { Checkbox, IconButton } from "@mui/material";
 import EditableSpan from "common/components/editableSpan";
 import CancelIcon from "@mui/icons-material/Cancel";
-import s from "./task.module.css";
+import s from "features/tasks/task.module.css";
 import { useAppDispatch } from "app/store";
 import { TaskStatuses } from "common/enums";
-import { tasksThunks } from "features/tasks/model/tasksReducer";
+import { tasksThunks } from "features/tasks/tasksReducer";
 import { RequestStatus, Sound } from "common/types";
 import useSound from "use-sound";
 // @ts-ignore

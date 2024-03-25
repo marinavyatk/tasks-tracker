@@ -1,6 +1,6 @@
 import { AnyAction, createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
 import { ListsDirection, RequestStatus, Sound } from "common/types";
-import { authThunks } from "features/loginForm/model/authReducer";
+import { authThunks } from "features/loginForm/authReducer";
 
 const initialState = {
   isInitialized: false,

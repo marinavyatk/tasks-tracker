@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Filter, RequestStatus, TodoListforUI, TodoListItem } from "common/types";
-import { todolistApi } from "features/todolist/api/todolistApi";
+import { todolistApi } from "features/todolist/todolistApi";
 import { createAppAsyncThunk } from "common/createAppAsyncThunk";
 import { ResultCode } from "common/enums";
-import { tasksThunks } from "features/tasks/model/tasksReducer";
+import { tasksThunks } from "features/tasks/tasksReducer";
 
 const initialState = [] as TodoListforUI[];
 const slice = createSlice({

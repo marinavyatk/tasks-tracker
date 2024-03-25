@@ -7,9 +7,9 @@ import useSound from "use-sound";
 // @ts-ignore
 import clickSound from "assets/clickSound.mp3";
 import { RequestStatus, Sound } from "common/types";
-import { todolistThunks } from "features/todolist/model/todolistReducer";
+import { todolistThunks } from "features/todolist/todolistReducer";
 import { useAppDispatch } from "app/store";
-import { tasksThunks } from "features/tasks/model/tasksReducer";
+import { tasksThunks } from "features/tasks/tasksReducer";
 
 type AddNewItemFieldProps = {
   todoId?: string;
@@ -72,7 +72,7 @@ const AddNewItemField = memo((props: AddNewItemFieldProps) => {
       style={{
         textAlign: "center",
         margin: "auto",
-        width: screenWidth > 550 ? props.width : "240px",
+        width: screenWidth > 550 ? props.width : props.isTodo ? "300px" : "240px",
       }}
     >
       <FormControl variant="outlined" sx={{ width: "100%", alignItems: "center" }}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import s from "features/sidebar/sidebarSection.module.css";
-import ProgressCircle from "common/components/ProgressCircle/ProgressCircle";
+import ProgressCircle from "common/components/ProgressCircle";
 import { useAppDispatch } from "app/store";
 import { appActions } from "app/appReducer";
 import { Badge } from "@mui/material";

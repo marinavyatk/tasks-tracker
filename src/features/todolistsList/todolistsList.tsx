@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import AddNewItemField from "common/components/addNewItemField";
-import Todolist from "features/todolist/ui/todolist";
+import AddNewItemField from "features/addNewItemField";
+import Todolist from "features/todolist/todolist";
 import { useAppDispatch } from "app/store";
-import { todolistThunks } from "features/todolist/model/todolistReducer";
+import { todolistThunks } from "features/todolist/todolistReducer";
 import { useSelector } from "react-redux";
 import {
   selectActiveTodo,
@@ -11,7 +11,7 @@ import {
   selectListsDirection,
   selectTodolists,
 } from "common/selectors";
-import s from "./todolistsList.module.css";
+import s from "features/todolistsList/todolistsList.module.css";
 import Sidebar from "features/sidebar/sidebar";
 import { Navigate } from "react-router-dom";
 import { appActions } from "app/appReducer";
@@ -35,7 +35,7 @@ const TodolistsList = () => {
     }
   }, []);
 
-  const [sidebarHidden, setSidebarHidden] = useState(false);
+  const [sidebarHidden, setSidebarHidden] = useState(window.innerWidth < 815);
   const dispatch = useAppDispatch();
   const isAuthorized = useSelector(selectIsAuthorized);
   const todolists = useSelector(selectTodolists);

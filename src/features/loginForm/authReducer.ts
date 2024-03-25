@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf, isRejected } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/createAppAsyncThunk";
-import AuthApi from "features/loginForm/api/authApi";
+import AuthApi from "features/loginForm/authApi";
 import { ResultCode } from "common/enums";
 import { DataForLogin, UserData } from "common/types";
 

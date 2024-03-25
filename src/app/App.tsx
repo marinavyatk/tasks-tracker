@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import TodolistsList from "features/todolistsList/ui/todolistsList";
-import LoginForm from "features/loginForm/ui/loginForm";
+import TodolistsList from "features/todolistsList/todolistsList";
+import LoginForm from "features/loginForm/loginForm";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { useAppDispatch } from "app/store";
-import { authThunks } from "features/loginForm/model/authReducer";
+import { authThunks } from "features/loginForm/authReducer";
 import SnackBar from "common/components/snackBar";
 import Loader from "common/components/loader/loader";
 import { useSelector } from "react-redux";

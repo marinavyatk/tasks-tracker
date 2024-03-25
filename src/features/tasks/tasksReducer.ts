@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Task, TasksState, UpdateTaskArg, UpdateTaskModel } from "common/types";
 import { createAppAsyncThunk } from "common/createAppAsyncThunk";
-import { tasksApi } from "features/tasks/api/tasksApi";
+import { tasksApi } from "features/tasks/tasksApi";
 import { ResultCode } from "common/enums";
-import { todolistActions, todolistThunks } from "features/todolist/model/todolistReducer";
+import { todolistActions, todolistThunks } from "features/todolist/todolistReducer";
 
 const initialState = {} as TasksState;
 const slice = createSlice({

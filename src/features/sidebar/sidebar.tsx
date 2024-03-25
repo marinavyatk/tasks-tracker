@@ -4,7 +4,7 @@ import SidebarSection from "features/sidebar/sidebarSection";
 import { useSelector } from "react-redux";
 import { selectListsDirection, selectSound, selectTasks, selectTodolists, selectUserEmail } from "common/selectors";
 import { useAppDispatch } from "app/store";
-import { authThunks } from "features/loginForm/model/authReducer";
+import { authThunks } from "features/loginForm/authReducer";
 import { TaskStatuses } from "common/enums";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -18,7 +18,7 @@ import useSound from "use-sound";
 // @ts-ignore
 import clickSound from "assets/clickSound.mp3";
 import { useState } from "react";
-import { todolistThunks } from "features/todolist/model/todolistReducer";
+import { todolistThunks } from "features/todolist/todolistReducer";
 
 type SidebarProps = {
   setSidebarHidden: (hidden: boolean) => void;
