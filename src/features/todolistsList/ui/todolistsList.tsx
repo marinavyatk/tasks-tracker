@@ -42,11 +42,6 @@ const TodolistsList = () => {
   const activeTodo = useSelector(selectActiveTodo);
   const error = useSelector(selectAppError);
   const listsDirection = useSelector(selectListsDirection);
-
-  const addTodolist = (newTodoTitle: string) => {
-    dispatch(todolistThunks.createTodolist(newTodoTitle));
-  };
-
   const todolistsForDisplay =
     activeTodo === "All"
       ? todolists.map((tl) => {
@@ -70,7 +65,7 @@ const TodolistsList = () => {
         <Sidebar setSidebarHidden={setSidebarHidden} />
       )}
       <div className={s.todoBlock}>
-        <AddNewItemField width={"500px"} placeholder={"Let`s create a list..."} addItem={addTodolist} error={error} />
+        <AddNewItemField width={"500px"} placeholder={"Let`s create a list..."} error={error} isTodo />
         <div className={`${s.todos} ${listsDirection === "column" ? s.columnOrientation : s.rowOrientation}`}>
           {todolistsForDisplay}
         </div>

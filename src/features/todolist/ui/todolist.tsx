@@ -43,9 +43,6 @@ const Todolist = (props: TodolistProps) => {
   const changeTodoTitle = (newTodoTitle: string) => {
     dispatch(todolistThunks.changeTodolistTitle({ todoId: props.todoId, newTodoTitle }));
   };
-  const handleAddTask = (newTaskTitle: string) => {
-    dispatch(tasksThunks.createTask({ todoId: props.todoId, taskTitle: newTaskTitle }));
-  };
   const handleDeleteTodolist = () => {
     dispatch(todolistThunks.deleteTodolist(props.todoId));
     playSound(sound);
@@ -141,10 +138,10 @@ const Todolist = (props: TodolistProps) => {
           <AddNewItemField
             width={"400px"}
             placeholder={"Add new task..."}
-            addItem={handleAddTask}
             error={error}
             todoId={props.todoId}
             todoEntityStatus={props.todoEntityStatus}
+            isTodo={false}
           />
         </CardContent>
         <div className={s.tasksBlock}>{tasksForDisplay}</div>

@@ -7,26 +7,30 @@ import useSound from "use-sound";
 // @ts-ignore
 import clickSound from "assets/clickSound.mp3";
 import { RequestStatus, Sound } from "common/types";
+import { todolistThunks } from "features/todolist/model/todolistReducer";
+import { useAppDispatch } from "app/store";
+import { tasksThunks } from "features/tasks/model/tasksReducer";
 
 type AddNewItemFieldProps = {
   todoId?: string;
   width: string;
   placeholder: string;
-  addItem: (newItemTitle: string) => void;
   error: string | null;
   todoEntityStatus?: RequestStatus;
+  isTodo: boolean;
 };
 const AddNewItemField = memo((props: AddNewItemFieldProps) => {
-  console.log("AddNewItemField");
+  // console.log("AddNewItemField");
   const [content, setContent] = useState("");
+  const [isForm, setForm] = useState(false);
   let [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const dispatch = useAppDispatch();
   const tasks = useSelector(selectTasks);
   const sound = useSelector(selectSound);
   useEffect(() => {
     setContent("");
   }, [tasks]);
   const [play] = useSound(clickSound);
-  const disabled = props.todoEntityStatus === "loading";
   const playSound = (sound: Sound) => {
     if (sound === "on") {
       play();
@@ -35,10 +39,6 @@ const AddNewItemField = memo((props: AddNewItemFieldProps) => {
   window.addEventListener("resize", () => {
     setScreenWidth(window.innerWidth);
   });
-  const addNewItem = () => {
-    props.addItem(content);
-    playSound(sound);
-  };
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setContent(e.currentTarget.value);
   };
@@ -47,6 +47,25 @@ const AddNewItemField = memo((props: AddNewItemFieldProps) => {
       addNewItem();
     }
   };
+
+  const addNewItem = () => {
+    if (isForm) return;
+    setForm(true);
+    playSound(sound);
+    props.isTodo
+      ? dispatch(todolistThunks.createTodolist(content))
+          .unwrap()
+          .finally(() => {
+            setForm(false);
+          })
+      : props.todoId &&
+        dispatch(tasksThunks.createTask({ todoId: props.todoId, taskTitle: content }))
+          .unwrap()
+          .finally(() => {
+            setForm(false);
+          });
+  };
+  const disabled = props.todoEntityStatus === "loading" || isForm;
 
   return (
     <div
