@@ -103,3 +103,7 @@ input:-webkit-autofill {
 .loginForm form {
     width: 100%;
 }
+
+.formControl {
+    width: 75%;
+}

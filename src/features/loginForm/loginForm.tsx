@@ -48,7 +48,7 @@ const LoginForm = () => {
               const isPasswordError = !!(formik.touched.password && formik.errors.password);
               return (
                 <form onSubmit={formik.handleSubmit} autoComplete="on">
-                  <FormControl>
+                  <FormControl className={s.formControl}>
                     <FormGroup>
                       <TextField
                         label="Email"
