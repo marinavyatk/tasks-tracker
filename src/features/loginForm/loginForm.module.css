@@ -99,3 +99,7 @@ input:-webkit-autofill {
         height: 150px;
     }
 }
+
+.loginForm form {
+    width: 100%;
+}

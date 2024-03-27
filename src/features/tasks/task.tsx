@@ -94,8 +94,9 @@ const Task = (props: TaskProps) => {
           sx={{
             color: "#a486fc",
             marginLeft: "-9px",
-            "& .Mui-disabled": {
+            "&.Mui-disabled": {
               color: "#a486fc",
+              opacity: "0.5",
             },
           }}
           disabled={disabled}
