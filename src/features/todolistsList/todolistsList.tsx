@@ -19,6 +19,14 @@ import { ListsDirection, Sound } from "common/types";
 import { HiddenMenuTrigger } from "common/components/hiddenMenuTrigger/hiddenMenuTrigger";
 
 const TodolistsList = () => {
+  const [sidebarHidden, setSidebarHidden] = useState(window.innerWidth < 815);
+  const dispatch = useAppDispatch();
+  const isAuthorized = useSelector(selectIsAuthorized);
+  const todolists = useSelector(selectTodolists);
+  const activeTodo = useSelector(selectActiveTodo);
+  const error = useSelector(selectAppError);
+  const listsDirection = useSelector(selectListsDirection);
+
   useEffect(() => {
     if (!isAuthorized) {
       return;
@@ -33,15 +41,8 @@ const TodolistsList = () => {
     if (sound) {
       dispatch(appActions.setSound({ sound: sound }));
     }
-  }, []);
+  }, [isAuthorized]);
 
-  const [sidebarHidden, setSidebarHidden] = useState(window.innerWidth < 815);
-  const dispatch = useAppDispatch();
-  const isAuthorized = useSelector(selectIsAuthorized);
-  const todolists = useSelector(selectTodolists);
-  const activeTodo = useSelector(selectActiveTodo);
-  const error = useSelector(selectAppError);
-  const listsDirection = useSelector(selectListsDirection);
   const todolistsForDisplay =
     activeTodo === "All"
       ? todolists.map((tl) => {

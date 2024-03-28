@@ -16,7 +16,7 @@ function App() {
   const appStatus = useSelector(selectAppStatus);
   useEffect(() => {
     dispatch(authThunks.me());
-  }, []);
+  }, [dispatch]);
   if (!isInitialized) {
     return <Loader />;
   }
